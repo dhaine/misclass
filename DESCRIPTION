@@ -15,4 +15,4 @@ RcppModules:  stan_fit4logistic_mod
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Suggests: testthat
+NeedsCompilation: yes
