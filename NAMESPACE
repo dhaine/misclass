@@ -3,7 +3,6 @@
 export(makeData)
 export(runProgram)
 importFrom(epiR,epi.betabuster)
-importFrom(rstan,stan)
 importFrom(stats,rbinom)
 importFrom(stats,rnorm)
 useDynLib(misclass, .registration = TRUE)
