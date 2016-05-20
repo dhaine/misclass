@@ -4,6 +4,7 @@
 #' quantify bias, and compare relative impact of selection vs. misclassification
 #' biases.
 #'
+#' @useDynLib misclass, .registration = TRUE
 #' @param data Data file.
 #' @param iter A positive integer specifying how many iterations for each chain
 #' (including warmup). The default is 1000.
@@ -28,7 +29,7 @@
 #'            cores = 4,
 #'            seed = 123)
 #' @export
-#' @importFrom rstan stan
+#' @import rstan
 runProgram <- function(data,
                        iter = 1000,
                        warmup = 100,
@@ -59,12 +60,12 @@ runProgram <- function(data,
                       K_2 = 1,
                       Z_2 = rep(1, nrow(data)))
     ## Running
-    true_ass <- rstan::stan(file = stanfit,
-                            data = stan_data,
-                            iter = iter,
-                            warmup = warmup,
-                            chains = chains,
-                            seed = seed,
-                            cores = cores)
-    return(true_ass)
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+    true_fit
 }
