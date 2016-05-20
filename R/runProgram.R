@@ -44,21 +44,22 @@ runProgram <- function(data,
     stanfit <- stanmodels$logistic
     ## 1. True association
     ## Data
-    x <- model.matrix(S2 ~ E_h, data)
+    data2 <- data[which(data$S1 == 0), ]
+    x <- model.matrix(S2 ~ E_h, data2)
     x.mean <- colMeans(x)
-    stan_data <- list(N = nrow(data),
-                      y = data$S2,
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2,
                       K = 2,
                       X = x,
                       X_means = as.array(x.mean),
-                      J_1 = data$cow,
-                      N_1 = length(unique(data$cow)),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
                       K_1 = 1,
-                      Z_1 = rep(1, nrow(data)),
-                      J_2 = data$herd,
-                      N_2 = length(unique(data$herd)),
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
                       K_2 = 1,
-                      Z_2 = rep(1, nrow(data)))
+                      Z_2 = rep(1, nrow(data2)))
     ## Running
     true_fit <- sampling(stanfit,
                          data = stan_data,
