@@ -2,6 +2,7 @@
 
 export(makeData)
 export(runProgram)
+import(rstan)
 importFrom(epiR,epi.betabuster)
 importFrom(stats,rbinom)
 importFrom(stats,rnorm)
