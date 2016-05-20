@@ -69,4 +69,329 @@ runProgram <- function(data,
                          seed = seed,
                          cores = cores)
     true_fit
+
+    ## 2. Single sample S1i S2i
+    ## Data
+    data2 <- data[which(data$S1i == 0), ]
+    x <- model.matrix(S2i ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2i,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 3. Single sample selection bias only
+    ## Data
+    data2 <- data[which(data$S1i == 0), ]
+    x <- model.matrix(S2 ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 4. Single sample misclassification bias only
+    ## Data
+    data2 <- data[which(data$S1 == 0), ]
+    x <- model.matrix(S2i ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2i,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 5. Duplicate sample parallel on S1 and S2
+    ## Data
+    data2 <- data[which(data$S1_parall == 0), ]
+    x <- model.matrix(S2_parall ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_parall,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 6. Duplicate sample parallel on S1 and simple on S2
+    ## Data
+    data2 <- data[which(data$S1_parall == 0), ]
+    x <- model.matrix(S2i ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2i,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 7. Duplicate sample parallel on S2 and simple on S1
+    ## Data
+    data2 <- data[which(data$S1i == 0), ]
+    x <- model.matrix(S2_parall ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_parall,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 8. Duplicate sample series on S1 and S2
+    ## Data
+    data2 <- data[which(data$S1_series == 0), ]
+    x <- model.matrix(S2_series ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_series,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 9. Duplicate sample series on S1 and simple on S2
+    ## Data
+    data2 <- data[which(data$S1_series == 0), ]
+    x <- model.matrix(S2i ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2i,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 10. Duplicate sample series on S2 and simple on S1
+    ## Data
+    data2 <- data[which(data$S1i == 0), ]
+    x <- model.matrix(S2_series ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_series,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 11. Duplicate sample parallel on S1 and series on S2
+    ## Data
+    data2 <- data[which(data$S1_parall == 0), ]
+    x <- model.matrix(S2_series ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_series,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 12. Duplicate sample series on S1 and parallel on S2
+    ## Data
+    data2 <- data[which(data$S1_series == 0), ]
+    x <- model.matrix(S2_parall ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_parall,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
+    ## 13. Triplicate samples
+    ## Data
+    data2 <- data[which(data$S1_tri == 0), ]
+    x <- model.matrix(S2_tri ~ E_h, data2)
+    x.mean <- colMeans(x)
+    stan_data <- list(N = nrow(data2),
+                      y = data2$S2_tri,
+                      K = 2,
+                      X = x,
+                      X_means = as.array(x.mean),
+                      J_1 = data2$cow,
+                      N_1 = length(unique(data2$cow)),
+                      K_1 = 1,
+                      Z_1 = rep(1, nrow(data2)),
+                      J_2 = data2$herd,
+                      N_2 = length(unique(data2$herd)),
+                      K_2 = 1,
+                      Z_2 = rep(1, nrow(data2)))
+    ## Running
+    true_fit <- sampling(stanfit,
+                         data = stan_data,
+                         iter = iter,
+                         warmup = warmup,
+                         chains = chains,
+                         seed = seed,
+                         cores = cores)
+
 }
