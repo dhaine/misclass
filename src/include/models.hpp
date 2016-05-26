@@ -200,6 +200,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         param_ranges_i__.clear();
         num_params_r__ += K;
         ++num_params_r__;
+        ++num_params_r__;
         num_params_r__ += N_1;
         ++num_params_r__;
         num_params_r__ += N_2;
@@ -230,6 +231,19 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
             writer__.vector_unconstrain(b);
         } catch (const std::exception& e) { 
             throw std::runtime_error(std::string("Error transforming variable b: ") + e.what());
+        }
+
+        if (!(context__.contains_r("temp_Intercept")))
+            throw std::runtime_error("variable temp_Intercept missing");
+        vals_r__ = context__.vals_r("temp_Intercept");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "temp_Intercept", "double", context__.to_vec());
+        double temp_Intercept(0);
+        temp_Intercept = vals_r__[pos__++];
+        try {
+            writer__.scalar_unconstrain(temp_Intercept);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable temp_Intercept: ") + e.what());
         }
 
         if (!(context__.contains_r("sd_1")))
@@ -323,6 +337,13 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         else
             b = in__.vector_constrain(K);
 
+        T__ temp_Intercept;
+        (void) temp_Intercept;   // dummy to suppress unused var warning
+        if (jacobian__)
+            temp_Intercept = in__.scalar_constrain(lp__);
+        else
+            temp_Intercept = in__.scalar_constrain();
+
         T__ sd_1;
         (void) sd_1;   // dummy to suppress unused var warning
         if (jacobian__)
@@ -369,7 +390,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         stan::math::fill(r_2,DUMMY_VAR__);
 
         try {
-            stan::math::assign(eta, multiply(X,b));
+            stan::math::assign(eta, add(multiply(X,b),temp_Intercept));
             stan::math::assign(r_1, multiply(sd_1,z_1));
             stan::math::assign(r_2, multiply(sd_2,z_2));
             for (int n = 1; n <= N; ++n) {
@@ -440,6 +461,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
     void get_param_names(std::vector<std::string>& names__) const {
         names__.resize(0);
         names__.push_back("b");
+        names__.push_back("temp_Intercept");
         names__.push_back("sd_1");
         names__.push_back("z_1");
         names__.push_back("sd_2");
@@ -447,7 +469,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         names__.push_back("eta");
         names__.push_back("r_1");
         names__.push_back("r_2");
-        names__.push_back("log_lik");
+        names__.push_back("b_Intercept");
     }
 
 
@@ -460,6 +482,8 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         dims__.resize(0);
         dimss__.push_back(dims__);
         dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
         dims__.push_back(N_1);
         dimss__.push_back(dims__);
         dims__.resize(0);
@@ -477,7 +501,6 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         dims__.push_back(N_2);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(N);
         dimss__.push_back(dims__);
     }
 
@@ -495,6 +518,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         (void) function__; // dummy call to supress warning
         // read-transform, write parameters
         vector_d b = in__.vector_constrain(K);
+        double temp_Intercept = in__.scalar_constrain();
         double sd_1 = in__.scalar_lb_constrain(0);
         vector_d z_1 = in__.vector_constrain(N_1);
         double sd_2 = in__.scalar_lb_constrain(0);
@@ -502,6 +526,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         for (int k_0__ = 0; k_0__ < K; ++k_0__) {
             vars__.push_back(b[k_0__]);
         }
+        vars__.push_back(temp_Intercept);
         vars__.push_back(sd_1);
         for (int k_0__ = 0; k_0__ < N_1; ++k_0__) {
             vars__.push_back(z_1[k_0__]);
@@ -525,7 +550,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         (void) r_2;  // dummy to suppress unused var warning
 
         try {
-            stan::math::assign(eta, multiply(X,b));
+            stan::math::assign(eta, add(multiply(X,b),temp_Intercept));
             stan::math::assign(r_1, multiply(sd_1,z_1));
             stan::math::assign(r_2, multiply(sd_2,z_2));
             for (int n = 1; n <= N; ++n) {
@@ -552,20 +577,18 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
 
         if (!include_gqs__) return;
         // declare and define generated quantities
-        vector_d log_lik(N);
-        (void) log_lik;  // dummy to suppress unused var warning
+        double b_Intercept(0.0);
+        (void) b_Intercept;  // dummy to suppress unused var warning
 
         double DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
         (void) DUMMY_VAR__;  // suppress unused var warning
 
 
         // initialize transformed variables to avoid seg fault on val access
-        stan::math::fill(log_lik,DUMMY_VAR__);
+        stan::math::fill(b_Intercept,DUMMY_VAR__);
 
         try {
-            for (int n = 1; n <= N; ++n) {
-                stan::math::assign(get_base1_lhs(log_lik,n,"log_lik",1), bernoulli_logit_log(get_base1(y,n,"y",1),multiply(get_base1(X,n,"X",1),b)));
-            }
+            stan::math::assign(b_Intercept, (temp_Intercept - dot_product(X_means,b)));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e,current_statement_begin__);
             // Next line prevents compiler griping about no return
@@ -575,9 +598,7 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         // validate generated quantities
 
         // write generated quantities
-        for (int k_0__ = 0; k_0__ < N; ++k_0__) {
-            vars__.push_back(log_lik[k_0__]);
-        }
+        vars__.push_back(b_Intercept);
 
     }
 
@@ -614,6 +635,9 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
             param_names__.push_back(param_name_stream__.str());
         }
         param_name_stream__.str(std::string());
+        param_name_stream__ << "temp_Intercept";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
         param_name_stream__ << "sd_1";
         param_names__.push_back(param_name_stream__.str());
         for (int k_0__ = 1; k_0__ <= N_1; ++k_0__) {
@@ -648,11 +672,9 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         }
 
         if (!include_gqs__) return;
-        for (int k_0__ = 1; k_0__ <= N; ++k_0__) {
-            param_name_stream__.str(std::string());
-            param_name_stream__ << "log_lik" << '.' << k_0__;
-            param_names__.push_back(param_name_stream__.str());
-        }
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "b_Intercept";
+        param_names__.push_back(param_name_stream__.str());
     }
 
 
@@ -666,6 +688,9 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
             param_names__.push_back(param_name_stream__.str());
         }
         param_name_stream__.str(std::string());
+        param_name_stream__ << "temp_Intercept";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
         param_name_stream__ << "sd_1";
         param_names__.push_back(param_name_stream__.str());
         for (int k_0__ = 1; k_0__ <= N_1; ++k_0__) {
@@ -700,11 +725,9 @@ throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
         }
 
         if (!include_gqs__) return;
-        for (int k_0__ = 1; k_0__ <= N; ++k_0__) {
-            param_name_stream__.str(std::string());
-            param_name_stream__ << "log_lik" << '.' << k_0__;
-            param_names__.push_back(param_name_stream__.str());
-        }
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "b_Intercept";
+        param_names__.push_back(param_name_stream__.str());
     }
 
 }; // model

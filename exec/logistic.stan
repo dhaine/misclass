@@ -6,19 +6,20 @@ data {
   int<lower=1> K;  // number of fixed effects 
   matrix[N, K] X;  // FE design matrix 
   vector[K] X_means;  // column means of X
-  // Random effects for cow
-  int<lower=1> J_1[N];  // cow RE levels
-  int<lower=1> N_1;  // nbr of cows
+  // Random effects for herd
+  int<lower=1> J_1[N];  // herd RE levels
+  int<lower=1> N_1;  // nbr of herds
   int<lower=1> K_1;  // nbr of REs
   vector[N] Z_1;  // RE design matrix
-  // Random effects for herd
-  int<lower=1> J_2[N];  // herd RE levels
-  int<lower=1> N_2;  // nbr of herds
+  // Random effects for cows within herds
+  int<lower=1> J_2[N];  // cow RE levels
+  int<lower=1> N_2;  // nbr of cows
   int<lower=1> K_2;  // nbr of REs
   vector[N] Z_2;  // RE design matrix
 }
 parameters {
   vector[K] b;  // fixed effects
+  real temp_Intercept;  // temporary intercept
   real<lower=0> sd_1;  // RE std dev (sigma)
   vector[N_1] z_1;  // unscaled REs (alpha)
   real<lower=0> sd_2;  // RE std dev (sigma)
@@ -29,7 +30,7 @@ transformed parameters{
   vector[N_1] r_1;  // REs
   vector[N_2] r_2;  // REs
   // compute linear predictor
-  eta <- X * b;
+  eta <- X * b + temp_Intercept;
   r_1 <- sd_1 * (z_1);  // scale REs
   r_2 <- sd_2 * (z_2);  // scale REs
   for (n in 1:N) {
@@ -47,6 +48,6 @@ model {
      y ~ bernoulli_logit(eta);
 }
 generated quantities {
-  vector[N] log_lik;
-  for (n in 1:N) log_lik[n] <- bernoulli_logit_log(y[n], X[n] * b);
+  real b_Intercept;  // herd-level intercept
+  b_Intercept <- temp_Intercept - dot_product(X_means, b);
 }
