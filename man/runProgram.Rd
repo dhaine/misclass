@@ -5,7 +5,7 @@
 \title{Fit Bayesian 3-level logistic model to evaluate misclassification.}
 \usage{
 runProgram(data, iter = 1000, warmup = 100, chains = 4, cores,
-  seed = 123)
+  seed = 123, nsimul)
 }
 \arguments{
 \item{data}{Data file.}
