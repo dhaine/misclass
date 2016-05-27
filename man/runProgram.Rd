@@ -24,6 +24,8 @@ to the number of chains).}
 
 \item{seed}{Positive integer. Used by \code{set.seed} to make results
 reproducible.}
+
+\item{nsimul}{Number of simulations.}
 }
 \value{
 An object of class \code{stanfit}.

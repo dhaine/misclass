@@ -82,7 +82,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 1] <- as.matrix(fit, pars = "b[2]")
+        m[, 1] <- as.matrix(fit, pars = "b[1]")
                 
         ## 2. Single sample S1i S2i
         ## Data
@@ -113,7 +113,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 2] <- as.matrix(fit, pars = "b[2]")
+        m[, 2] <- as.matrix(fit, pars = "b[1]")
         
         ## 3. Single sample selection bias only
         ## Data
@@ -144,7 +144,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 3] <- as.matrix(fit, pars = "b[2]")
+        m[, 3] <- as.matrix(fit, pars = "b[1]")
         
         ## 4. Single sample misclassification bias only
         ## Data
@@ -175,7 +175,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 4] <- as.matrix(fit, pars = "b[2]")
+        m[, 4] <- as.matrix(fit, pars = "b[1]")
         
         ## 5. Duplicate sample parallel on S1 and S2
         ## Data
@@ -206,7 +206,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 5] <- as.matrix(fit, pars = "b[2]")
+        m[, 5] <- as.matrix(fit, pars = "b[1]")
         
         ## 6. Duplicate sample parallel on S1 and simple on S2
         ## Data
@@ -237,7 +237,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 6] <- as.matrix(fit, pars = "b[2]")
+        m[, 6] <- as.matrix(fit, pars = "b[1]")
         
         ## 7. Duplicate sample parallel on S2 and simple on S1
         ## Data
@@ -268,7 +268,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 7] <- as.matrix(fit, pars = "b[2]")
+        m[, 7] <- as.matrix(fit, pars = "b[1]")
         
         ## 8. Duplicate sample series on S1 and S2
         ## Data
@@ -299,7 +299,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 8] <- as.matrix(fit, pars = "b[2]")
+        m[, 8] <- as.matrix(fit, pars = "b[1]")
         
         ## 9. Duplicate sample series on S1 and simple on S2
         ## Data
@@ -330,7 +330,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 9] <- as.matrix(fit, pars = "b[2]")
+        m[, 9] <- as.matrix(fit, pars = "b[1]")
         
         ## 10. Duplicate sample series on S2 and simple on S1
         ## Data
@@ -361,7 +361,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 10] <- as.matrix(fit, pars = "b[2]")
+        m[, 10] <- as.matrix(fit, pars = "b[1]")
         
         ## 11. Duplicate sample parallel on S1 and series on S2
         ## Data
@@ -392,7 +392,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 11] <- as.matrix(fit, pars = "b[2]")
+        m[, 11] <- as.matrix(fit, pars = "b[1]")
         
         ## 12. Duplicate sample series on S1 and parallel on S2
         ## Data
@@ -423,7 +423,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 12] <- as.matrix(fit, pars = "b[2]")
+        m[, 12] <- as.matrix(fit, pars = "b[1]")
         
         ## 13. Triplicate samples
         ## Data
@@ -454,7 +454,7 @@ runProgram <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores)
-        m[, 13] <- as.matrix(fit, pars = "b[2]")
+        m[, 13] <- as.matrix(fit, pars = "b[1]")
 
         out_list[[i]] <- m
     }
