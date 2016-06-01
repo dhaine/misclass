@@ -93,7 +93,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2i,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -155,7 +155,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2i,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -186,7 +186,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_parall,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -217,7 +217,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2i,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -248,7 +248,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_parall,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -279,7 +279,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_series,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -310,7 +310,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2i,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -341,7 +341,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_series,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -372,7 +372,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_series,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -403,7 +403,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_parall,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
@@ -434,7 +434,7 @@ runProgram <- function(data,
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
-                          y = data2$S2,
+                          y = data2$S2_tri,
                           K = 1,
                           X = ifelse(x == 0, -x.mean, 1 - x.mean),
                           X_means = as.array(x.mean),
