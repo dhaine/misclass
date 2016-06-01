@@ -86,7 +86,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 1] <- as.matrix(fit, pars = "b[1]")
                 
-        ## 2. Single sample S1i S2i
+        ## 2. Single samples
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
         x <- model.matrix(S2i ~ E_h, data2)
@@ -117,7 +117,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 2] <- as.matrix(fit, pars = "b[1]")
         
-        ## 3. Single sample selection bias only
+        ## 3. Single samples, selection bias only
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
         x <- model.matrix(S2 ~ E_h, data2)
@@ -148,7 +148,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 3] <- as.matrix(fit, pars = "b[1]")
         
-        ## 4. Single sample misclassification bias only
+        ## 4. Single samples, misclassification bias only
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1 == 0), ]
         x <- model.matrix(S2i ~ E_h, data2)
@@ -179,7 +179,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 4] <- as.matrix(fit, pars = "b[1]")
         
-        ## 5. Duplicate sample parallel on S1 and S2
+        ## 5. Duplicate samples, parallel interpretation on S1 and S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_parall == 0), ]
         x <- model.matrix(S2_parall ~ E_h, data2)
@@ -210,7 +210,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 5] <- as.matrix(fit, pars = "b[1]")
         
-        ## 6. Duplicate sample parallel on S1 and simple on S2
+        ## 6. Duplicate samples, parallel interpretation on S1 and single on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_parall == 0), ]
         x <- model.matrix(S2i ~ E_h, data2)
@@ -241,7 +241,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 6] <- as.matrix(fit, pars = "b[1]")
         
-        ## 7. Duplicate sample parallel on S2 and simple on S1
+        ## 7. Duplicate samples, parallel interpretation on S2 and single on S1
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
         x <- model.matrix(S2_parall ~ E_h, data2)
@@ -272,7 +272,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 7] <- as.matrix(fit, pars = "b[1]")
         
-        ## 8. Duplicate sample series on S1 and S2
+        ## 8. Duplicate samples, series interpretation on S1 and S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_series == 0), ]
         x <- model.matrix(S2_series ~ E_h, data2)
@@ -303,7 +303,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 8] <- as.matrix(fit, pars = "b[1]")
         
-        ## 9. Duplicate sample series on S1 and simple on S2
+        ## 9. Duplicate samples, series interpretation on S1 and single on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_series == 0), ]
         x <- model.matrix(S2i ~ E_h, data2)
@@ -334,7 +334,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 9] <- as.matrix(fit, pars = "b[1]")
         
-        ## 10. Duplicate sample series on S2 and simple on S1
+        ## 10. Duplicate samples, series interpretation on S2 and single on S1
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
         x <- model.matrix(S2_series ~ E_h, data2)
@@ -365,7 +365,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 10] <- as.matrix(fit, pars = "b[1]")
         
-        ## 11. Duplicate sample parallel on S1 and series on S2
+        ## 11. Duplicate samples, parallel interpretation on S1 and series on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_parall == 0), ]
         x <- model.matrix(S2_series ~ E_h, data2)
@@ -396,7 +396,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 11] <- as.matrix(fit, pars = "b[1]")
         
-        ## 12. Duplicate sample series on S1 and parallel on S2
+        ## 12. Duplicate samples, series interpretation on S1 and parallel on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_series == 0), ]
         x <- model.matrix(S2_parall ~ E_h, data2)
@@ -427,7 +427,7 @@ runProgram <- function(data,
                         cores = cores)
         m[, 12] <- as.matrix(fit, pars = "b[1]")
         
-        ## 13. Triplicate samples
+        ## 13. Triplicate samples (2 ou 3 positives)
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_tri == 0), ]
         x <- model.matrix(S2_tri ~ E_h, data2)
