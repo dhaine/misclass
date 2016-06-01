@@ -51,6 +51,9 @@ runProgram <- function(data,
     colnames(m) <- c("post_t", "post_s", "post_ss", "post_sm", "post_dpp", 
                      "post_dpsi", "post_dsip", "post_dss", "post_dssi", "post_dsis", 
                      "post_dps", "post_dsp", "post_tr")
+    diag_list <- vector("list", nsimul)
+    d <- matrix(NA, nrow = 13, ncol = 3)
+    colnames(d) <- c("Rhat", "n_eff", "sample_size")
 
     pb <- txtProgressBar(min = 0, max = nsimul, style = 3)
 
@@ -85,6 +88,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 1] <- as.matrix(fit, pars = "b[1]")
+        d[1, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
                 
         ## 2. Single samples
         ## Data
@@ -116,6 +122,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 2] <- as.matrix(fit, pars = "b[1]")
+        d[2, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 3. Single samples, selection bias only
         ## Data
@@ -147,6 +156,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 3] <- as.matrix(fit, pars = "b[1]")
+        d[3, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 4. Single samples, misclassification bias only
         ## Data
@@ -178,6 +190,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 4] <- as.matrix(fit, pars = "b[1]")
+        d[4, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 5. Duplicate samples, parallel interpretation on S1 and S2
         ## Data
@@ -209,6 +224,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 5] <- as.matrix(fit, pars = "b[1]")
+        d[5, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 6. Duplicate samples, parallel interpretation on S1 and single on S2
         ## Data
@@ -240,6 +258,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 6] <- as.matrix(fit, pars = "b[1]")
+        d[6, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 7. Duplicate samples, parallel interpretation on S2 and single on S1
         ## Data
@@ -271,6 +292,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 7] <- as.matrix(fit, pars = "b[1]")
+        d[7, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 8. Duplicate samples, series interpretation on S1 and S2
         ## Data
@@ -302,6 +326,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 8] <- as.matrix(fit, pars = "b[1]")
+        d[8, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 9. Duplicate samples, series interpretation on S1 and single on S2
         ## Data
@@ -333,6 +360,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 9] <- as.matrix(fit, pars = "b[1]")
+        d[9, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                       summary(fit)$summary[1, "n_eff"],
+                       length(extract(fit, pars = "lp__")[[1]]))
         
         ## 10. Duplicate samples, series interpretation on S2 and single on S1
         ## Data
@@ -364,6 +394,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 10] <- as.matrix(fit, pars = "b[1]")
+        d[10, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                        summary(fit)$summary[1, "n_eff"],
+                        length(extract(fit, pars = "lp__")[[1]]))
         
         ## 11. Duplicate samples, parallel interpretation on S1 and series on S2
         ## Data
@@ -395,6 +428,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 11] <- as.matrix(fit, pars = "b[1]")
+        d[11, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                        summary(fit)$summary[1, "n_eff"],
+                        length(extract(fit, pars = "lp__")[[1]]))
         
         ## 12. Duplicate samples, series interpretation on S1 and parallel on S2
         ## Data
@@ -426,6 +462,9 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 12] <- as.matrix(fit, pars = "b[1]")
+        d[12, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                        summary(fit)$summary[1, "n_eff"],
+                        length(extract(fit, pars = "lp__")[[1]]))
         
         ## 13. Triplicate samples (2 ou 3 positives)
         ## Data
@@ -457,11 +496,16 @@ runProgram <- function(data,
                         seed = seed,
                         cores = cores)
         m[, 13] <- as.matrix(fit, pars = "b[1]")
+        d[13, 1:3] <- c(summary(fit)$summary[1, "Rhat"],
+                        summary(fit)$summary[1, "n_eff"],
+                        length(extract(fit, pars = "lp__")[[1]]))
 
         out_list[[i]] <- m
+        diag_list[[i]] <- d
 
         setTxtProgressBar(pb, i)
     }
     close(pb)
+    out_list <- append(out_list, diag_list)
     out_list
 }
