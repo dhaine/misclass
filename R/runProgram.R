@@ -52,6 +52,8 @@ runProgram <- function(data,
                      "post_dpsi", "post_dsip", "post_dss", "post_dssi", "post_dsis", 
                      "post_dps", "post_dsp", "post_tr")
 
+    pb <- txtProgressBar(min = 0, max = nsimul, style = 3)
+
     for (i in 1:nsimul) {
         ## 1. True association
         ## Data
@@ -457,6 +459,9 @@ runProgram <- function(data,
         m[, 13] <- as.matrix(fit, pars = "b[1]")
 
         out_list[[i]] <- m
+
+        setTxtProgressBar(pb, i)
     }
+    close(pb)
     out_list
 }
