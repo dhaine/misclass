@@ -4,70 +4,73 @@
 \alias{makeData}
 \title{Create simulated datasets.}
 \usage{
-makeData(n_herd, n_cow, E_hPr = 0.5, E_cPr = 0.5, E_qPr = 0.5,
-  sigma_sqhPr = 0.14, sigma_sqcPr = 2.25, b0_Pr = -6.7, OR_hPr = 3,
-  OR_cPr = 3, OR_qPr = 3, sigma_sqhI = 0.838, sigma_sqcI = 2.926,
-  b0_I = -8.3, OR_hI = 3, OR_cI = 3, OR_qI = 3, sigma_sqhEl = 0.15,
-  sigma_sqcEl = 2.246, b0_El = -0.6, se_parms = c(0.9, 0.85),
-  sp_parms = 1, se_series = -0.1, sp_series = 0, se_parall = 0.1,
-  sp_parall = 0, se_tri = 0, sp_tri = 0)
+makeData(n_herd, n_cow, bact = c("saureus", "cns", "other"), E_hPr = NULL,
+  E_cPr = NULL, E_qPr = NULL, sigma_sqhPr = NULL, sigma_sqcPr = NULL,
+  b0_Pr = NULL, OR_hPr = NULL, OR_cPr = NULL, OR_qPr = NULL,
+  sigma_sqhI = NULL, sigma_sqcI = NULL, b0_I = NULL, OR_hI = NULL,
+  OR_cI = NULL, OR_qI = NULL, sigma_sqhEl = NULL, sigma_sqcEl = NULL,
+  b0_El = NULL, se_parms = NULL, sp_parms = NULL, se_series = NULL,
+  sp_series = NULL, se_parall = NULL, sp_parall = NULL, se_tri = NULL,
+  sp_tri = NULL)
 }
 \arguments{
 \item{n_herd}{Number of herds.}
 
 \item{n_cow}{Number of cows per herd.}
 
-\item{E_hPr}{Exposure distribution (0 to 1) of the binary herd-level (h) predictor.}
+\item{bact}{Type of bacteria: S. aureus, CNS, or other. If other, as to provide parameters.}
 
-\item{E_cPr}{Exposure distribution (0 to 1) of the binary cow-level (c) predictor.}
+\item{E_hPr}{Exposure distribution (0 to 1) of the binary herd-level (h) predictor. S. aureus and CNS = 0.5.}
 
-\item{E_qPr}{Exposure distribution (0 to 1) of the binary quarter-level (q) predictor.}
+\item{E_cPr}{Exposure distribution (0 to 1) of the binary cow-level (c) predictor. S. aureus and CNS = 0.5.}
 
-\item{sigma_sqhPr}{Herd-level variance (sigma_sq) for prevalence of intra-mammary infection (IMI).}
+\item{E_qPr}{Exposure distribution (0 to 1) of the binary quarter-level (q) predictor. S. aureus and CNS = 0.5.}
 
-\item{sigma_sqcPr}{Cow-level variance for prevalence of IMI.}
+\item{sigma_sqhPr}{Herd-level variance (sigma_sq) for prevalence of intra-mammary infection (IMI). S. aureus = 0.14; CNS = 0.363.}
 
-\item{b0_Pr}{Intercept for IMI prevalence; aiming at a prevalence of 2.5%.}
+\item{sigma_sqcPr}{Cow-level variance for prevalence of IMI. S. aureus = 2.25; CNS = 0.294.}
 
-\item{OR_hPr}{OR of association between herd-level variable and IMI prevalence.}
+\item{b0_Pr}{Intercept for IMI prevalence; aiming at a prevalence of 2.5%. S. aureus = -6.7; CNS = -2.15.}
 
-\item{OR_cPr}{OR of association between cow-level variable and IMI prevalence.}
+\item{OR_hPr}{OR of association between herd-level variable and IMI prevalence. S. aureus and CNS = 3.}
 
-\item{OR_qPr}{OR of association between observation-level variable and IMI prevalence.}
+\item{OR_cPr}{OR of association between cow-level variable and IMI prevalence. S. aureus and CNS = 3.}
 
-\item{sigma_sqhI}{Herd-level variance for incidence of IMI.}
+\item{OR_qPr}{OR of association between observation-level variable and IMI prevalence. S. aureus and CNS = 3.}
 
-\item{sigma_sqcI}{Cow-level variance for incidence of IMI.}
+\item{sigma_sqhI}{Herd-level variance for incidence of IMI. S. aureus = 0.838; CNS = 0.27.}
 
-\item{b0_I}{Intercept for IMI incidence.}
+\item{sigma_sqcI}{Cow-level variance for incidence of IMI. S. aureus = 2.926; CNS = 0.256.}
 
-\item{OR_hI}{OR of association between herd-level variable and IMI incidence.}
+\item{b0_I}{Intercept for IMI incidence. S. aureus = -8.3; CNS = -2.4.}
 
-\item{OR_cI}{OR of association between cow-level variable and IMI incidence.}
+\item{OR_hI}{OR of association between herd-level variable and IMI incidence. S. aureus and CNS = 3.}
 
-\item{OR_qI}{OR of association between observation-level variable and IMI incidence.}
+\item{OR_cI}{OR of association between cow-level variable and IMI incidence. S. aureus and CNS = 3.}
 
-\item{sigma_sqhEl}{Herd-level variance for elimination of IMI.}
+\item{OR_qI}{OR of association between observation-level variable and IMI incidence. S. aureus and CNS = 3.}
 
-\item{sigma_sqcEl}{Cow-level variance for elimination of IMI.}
+\item{sigma_sqhEl}{Herd-level variance for elimination of IMI. S. aureus = 0.15; CNS = 0.112.}
 
-\item{b0_El}{Intercept for IMI persistency.}
+\item{sigma_sqcEl}{Cow-level variance for elimination of IMI. S. aureus = 2.246; CNS = 0.7.}
 
-\item{se_parms}{Vector for mode and x to determine shape parameters of Beta distribution of sensitivity (Se).}
+\item{b0_El}{Intercept for IMI persistency. S. aureus = -0.6; CNS = 1.6.}
 
-\item{sp_parms}{Vector for mode and x to determine shape parameters of Beta distribution of specificity (Sp).}
+\item{se_parms}{Vector for mode and x to determine shape parameters of Beta distribution of sensitivity (Se). S. aureus = c(0.90, 0.85); CNS = c(0.60, 0.55).}
 
-\item{se_series}{Se improvement or loss associated with sampling strategy: duplicate series.}
+\item{sp_parms}{Vector for mode and x to determine shape parameters of Beta distribution of specificity (Sp). S. aureus = 1; CNS = c(0.95, 0.90).}
 
-\item{sp_series}{Sp improvement or loss associated with sampling strategy: duplicate series.}
+\item{se_series}{Se improvement or loss associated with sampling strategy: duplicate series. S. aureus = -0.1; CNS = -0.25.}
 
-\item{se_parall}{Se improvement or loss associated with sampling strategy: duplicate parallel.}
+\item{sp_series}{Sp improvement or loss associated with sampling strategy: duplicate series. S. aureus = 0; CNS = 0.05.}
 
-\item{sp_parall}{Sp improvement or loss associated with sampling strategy:duplicate parallel.}
+\item{se_parall}{Se improvement or loss associated with sampling strategy: duplicate parallel. S. aureus = 0.1; CNS = 0.15.}
 
-\item{se_tri}{Se improvement or loss associated with sampling strategy: triplicate (2 out of 3).}
+\item{sp_parall}{Sp improvement or loss associated with sampling strategy:duplicate parallel. S. aureus = 0; CNS = -0.05.}
 
-\item{sp_tri}{Sp improvement or loss associated with sampling strategy: triplicate (2 out of 3).}
+\item{se_tri}{Se improvement or loss associated with sampling strategy: triplicate (2 out of 3). S. aureus = 0; CNS = 0.}
+
+\item{sp_tri}{Sp improvement or loss associated with sampling strategy: triplicate (2 out of 3). S. aureus = 0; CNS = 0.10.}
 }
 \value{
 A data frame with variables:
@@ -90,7 +93,7 @@ A data frame with variables:
 }
 \description{
 Create datasets from a hypothetical cohort study. Since correlation structures
-are often found in udder health studies, the generated datasets are be deemed
+are often found in udder health studies, the generated datasets are deemed
 to have occurred from the collection of two milk samples collected 1 month
 apart from each quarters of a random sample of 30 cows per herd, from 100
 dairy herds. The first milk sample (S1) is used to identify quarters at risk of
@@ -101,17 +104,18 @@ strength of association (OR~3.0) are generated. As it is often the case
 (Dufour et al., 2011, 2012), exposures are equally associated with odds of a
 prevalent IMI on first milk sample as with odds of IMI acquisition on second
 sample. Exposures are randomly associated with odds of eliminating an existing
-IMI (OR=1.0). By default, dataset for S. aureus is created.
+IMI (OR=1.0). If S. aureus or CNS is chosen, default parameters are used.
+Otherwise user has to provide his own.
 }
 \examples{
 # Initiate a list to store the n data frames
 sim_list <- vector("list", 5)
 # Do not forget to set seed for replication
 set.seed(123)
-sim_list <- replicate(n = 5, expr = makeData(100, 30), simplify = FALSE)
+sim_list <- replicate(n = 5, expr = makeData(100, 30, "saureus"), simplify = FALSE)
 # Or with a progress bar
 require(pbapply)
-sim_list <- pbreplicate(n = 5, expr = makeData(100, 30), simplify = FALSE)
+sim_list <- pbreplicate(n = 5, expr = makeData(100, 30, "cns"), simplify = FALSE)
 }
 \references{
 Dufour, S., Dohoo, I.R., Barkema, H.W., DesCôteaux, L., DeVries, T.J., Reyher, K.K., Roy, J.-P., Scholl, D.T., 2012 \emph{Epidemiology of coagulase-negative staphylococci intramammary infection in dairy cattle and the effect of bacteriological culture misclassification}. Journal of Dairy Science 95(6):3110-3124.
