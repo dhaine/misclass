@@ -31,7 +31,7 @@
 #'            seed = 123)
 #' @export
 #' @import rstan
-runProgram <- function(data,
+check_bias <- function(data,
                        iter = 500,
                        warmup = 100,
                        chains = 4,
