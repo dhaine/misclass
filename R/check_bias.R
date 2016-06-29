@@ -23,7 +23,7 @@
 #' @author Denis Haine
 #'
 #' @examples
-#' runProgram(sim_list[[1]],
+#' check_bias(sim_list[[1]],
 #'            iter = 200,
 #'            warmup = 25,
 #'            chains = 4,
@@ -47,7 +47,7 @@ check_bias <- function(data,
 
     ## Collect results
     out_list <- vector("list", nsimul)
-    m <- matrix(NA, nrow = chains * (iter - warmup), ncol = 13)
+    m <- matrix(NA, nrow = chains * (iter - warmup), ncol = 4)
     colnames(m) <- c("post_t", "post_s", "post_ss", "post_sm")
     diag_list <- vector("list", nsimul)
     d <- matrix(NA, nrow = 4, ncol = 5)
