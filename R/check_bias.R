@@ -94,7 +94,7 @@ check_bias <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 1] <- as.matrix(fit, pars = "b[1]")
         d[1, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -131,7 +131,7 @@ check_bias <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 2] <- as.matrix(fit, pars = "b[1]")
         d[2, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -168,7 +168,7 @@ check_bias <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 3] <- as.matrix(fit, pars = "b[1]")
         d[3, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -205,7 +205,7 @@ check_bias <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 4] <- as.matrix(fit, pars = "b[1]")
         d[4, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],

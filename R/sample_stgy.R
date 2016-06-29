@@ -96,7 +96,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 1] <- as.matrix(fit, pars = "b[1]")
         d[1, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -133,7 +133,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 2] <- as.matrix(fit, pars = "b[1]")
         d[2, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -170,7 +170,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 3] <- as.matrix(fit, pars = "b[1]")
         d[3, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -207,7 +207,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 4] <- as.matrix(fit, pars = "b[1]")
         d[4, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -244,7 +244,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 5] <- as.matrix(fit, pars = "b[1]")
         d[5, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -281,7 +281,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 6] <- as.matrix(fit, pars = "b[1]")
         d[6, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -318,7 +318,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 7] <- as.matrix(fit, pars = "b[1]")
         d[7, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -355,7 +355,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 8] <- as.matrix(fit, pars = "b[1]")
         d[8, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
@@ -392,7 +392,7 @@ sample_stgy <- function(data,
                         chains = chains,
                         seed = seed,
                         cores = cores,
-                        control = list(adapt_delta = 0.9))
+                        control = list(adapt_delta = 0.99))
         m[, 9] <- as.matrix(fit, pars = "b[1]")
         d[9, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
