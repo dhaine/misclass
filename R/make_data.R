@@ -69,42 +69,42 @@
 #' sim_list <- vector("list", 5)
 #' # Do not forget to set seed for replication
 #' set.seed(123)
-#' sim_list <- replicate(n = 5, expr = makeData(100, 30, "saureus"), simplify = FALSE)
+#' sim_list <- replicate(n = 5, expr = make_data(100, 30, "saureus"), simplify = FALSE)
 #' # Or with a progress bar
 #' require(pbapply)
-#' sim_list <- pbreplicate(n = 5, expr = makeData(100, 30, "cns"), simplify = FALSE)
+#' sim_list <- pbreplicate(n = 5, expr = make_data(100, 30, "cns"), simplify = FALSE)
 #' @export
 #' @importFrom epiR epi.betabuster
 #' @importFrom stats rnorm rbinom
-makeData <- function(n_herd,
-                     n_cow,
-                     bact = c("saureus", "cns", "other"),
-                     E_hPr = NULL,
-                     E_cPr = NULL,
-                     E_qPr = NULL,
-                     sigma_sqhPr = NULL,
-                     sigma_sqcPr = NULL,
-                     b0_Pr = NULL,
-                     OR_hPr = NULL,
-                     OR_cPr = NULL,
-                     OR_qPr = NULL,
-                     sigma_sqhI = NULL,
-                     sigma_sqcI = NULL,
-                     b0_I = NULL,
-                     OR_hI = NULL,
-                     OR_cI = NULL,
-                     OR_qI = NULL,
-                     sigma_sqhEl = NULL,
-                     sigma_sqcEl = NULL,
-                     b0_El = NULL,
-                     se_parms = NULL,
-                     sp_parms = NULL,
-                     se_series = NULL,
-                     sp_series = NULL,
-                     se_parall = NULL,
-                     sp_parall = NULL,
-                     se_tri = NULL,
-                     sp_tri = NULL) {
+make_data <- function(n_herd,
+                      n_cow,
+                      bact = c("saureus", "cns", "other"),
+                      E_hPr = NULL,
+                      E_cPr = NULL,
+                      E_qPr = NULL,
+                      sigma_sqhPr = NULL,
+                      sigma_sqcPr = NULL,
+                      b0_Pr = NULL,
+                      OR_hPr = NULL,
+                      OR_cPr = NULL,
+                      OR_qPr = NULL,
+                      sigma_sqhI = NULL,
+                      sigma_sqcI = NULL,
+                      b0_I = NULL,
+                      OR_hI = NULL,
+                      OR_cI = NULL,
+                      OR_qI = NULL,
+                      sigma_sqhEl = NULL,
+                      sigma_sqcEl = NULL,
+                      b0_El = NULL,
+                      se_parms = NULL,
+                      sp_parms = NULL,
+                      se_series = NULL,
+                      sp_series = NULL,
+                      se_parall = NULL,
+                      sp_parall = NULL,
+                      se_tri = NULL,
+                      sp_tri = NULL) {
     if(missing(bact))
         stop('Please choose type of bacteria.')
     if(!(bact %in% c("saureus", "cns", "other")))
