@@ -30,11 +30,11 @@ transformed parameters{
   vector[N_1] r_1;  // REs
   vector[N_2] r_2;  // REs
   // compute linear predictor
-  eta <- X * b + temp_Intercept;
-  r_1 <- sd_1 * (z_1);  // scale REs
-  r_2 <- sd_2 * (z_2);  // scale REs
+  eta = X * b + temp_Intercept;
+  r_1 = sd_1 * (z_1);  // scale REs
+  r_2 = sd_2 * (z_2);  // scale REs
   for (n in 1:N) {
-    eta[n] <- eta[n] + r_1[J_1[n]] * Z_1[n] + r_2[J_2[n]] * Z_2[n];
+    eta[n] = eta[n] + r_1[J_1[n]] * Z_1[n] + r_2[J_2[n]] * Z_2[n];
   }
 }
 model {
@@ -49,5 +49,5 @@ model {
 }
 generated quantities {
   real b_Intercept;  // herd-level intercept
-  b_Intercept <- temp_Intercept - dot_product(X_means, b);
+  b_Intercept = temp_Intercept - dot_product(X_means, b);
 }
