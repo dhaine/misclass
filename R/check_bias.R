@@ -51,11 +51,11 @@ check_bias <- function(data,
     colnames(m) <- c("post_t", "post_s", "post_ss", "post_sm")
     diag_list <- vector("list", nsimul)
     d <- matrix(NA, nrow = 4, ncol = 5)
-    colnames(d) <- c("Rhat", "n_eff", "sample_size", "n_divergent", "treedepth")
+    colnames(d) <- c("Rhat", "n_eff", "sample_size", "divergent", "treedepth")
 
     count_divergences <- function(fit) {
         sampler_params <- get_sampler_params(fit, inc_warmup = FALSE)
-        sum(sapply(sampler_params, function(x) c(x[, 'n_divergent__']))[, 1])
+        sum(sapply(sampler_params, function(x) c(x[, 'divergent__']))[, 1])
     }
     max_treedepth <- function(fit) {
         sampler_params <- get_sampler_params(fit, inc_warmup = FALSE)
