@@ -23,7 +23,7 @@
 #' @param E_qPr Exposure distribution (0 to 1) of the binary quarter-level (q) predictor. S. aureus and CNS = 0.5.
 #' @param sigma_sqhPr Herd-level variance (sigma_sq) for prevalence of intra-mammary infection (IMI). S. aureus = 0.14; CNS = 0.363.
 #' @param sigma_sqcPr Cow-level variance for prevalence of IMI. S. aureus = 2.25; CNS = 0.294.
-#' @param b0_Pr Intercept for IMI prevalence; aiming at a prevalence of 2.5%. S. aureus = -6.7; CNS = -2.15.
+#' @param b0_Pr Intercept for IMI prevalence; aiming at a prevalence of 2.5\%. S. aureus = -6.7; CNS = -2.15.
 #' @param OR_hPr OR of association between herd-level variable and IMI prevalence. S. aureus and CNS = 3.
 #' @param OR_cPr OR of association between cow-level variable and IMI prevalence. S. aureus and CNS = 3.
 #' @param OR_qPr OR of association between observation-level variable and IMI prevalence. S. aureus and CNS = 3.

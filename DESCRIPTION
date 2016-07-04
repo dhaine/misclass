@@ -6,7 +6,7 @@ Date: 2016-05-19
 Authors@R: c(
 	   person("Denis", "Haine", email = "denis.haine@gmail.com", role = c("aut", "cre")),
 	   person("Simon", "Dufour", email = "simon.dufour@umontreal.ca", role = "aut"))
-Description: More about what it does (maybe more than one line)
+Description: Code to run Bayesian evaluation  of misclassification bias.
 License: GPL-2
 Depends: R (>= 3.3.1), Rcpp (>= 0.12.5)
 Imports: epiR (>= 0.9-77), rstan (>= 2.10.1)

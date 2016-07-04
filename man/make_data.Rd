@@ -30,7 +30,7 @@ make_data(n_herd, n_cow, bact = c("saureus", "cns", "other"), E_hPr = NULL,
 
 \item{sigma_sqcPr}{Cow-level variance for prevalence of IMI. S. aureus = 2.25; CNS = 0.294.}
 
-\item{b0_Pr}{Intercept for IMI prevalence; aiming at a prevalence of 2.5%. S. aureus = -6.7; CNS = -2.15.}
+\item{b0_Pr}{Intercept for IMI prevalence; aiming at a prevalence of 2.5\%. S. aureus = -6.7; CNS = -2.15.}
 
 \item{OR_hPr}{OR of association between herd-level variable and IMI prevalence. S. aureus and CNS = 3.}
 
