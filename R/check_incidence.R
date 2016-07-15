@@ -69,15 +69,12 @@ check_incidence <- function(data,
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1 == 0), ]
         x <- model.matrix(S2 ~ 1, data2)
-        x <- x[, 2, drop = FALSE]
-        x.mean <- colMeans(x)
+        x <- x[, 0, drop = FALSE]
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
                           y = data2$S2,
-                          K = 1,
-                          X = sweep(x, 2L, x.mean, FUN = "-"),
-                          X_means = as.array(x.mean),
+                          X = x,
                           J_1 = data2$herd2,
                           N_1 = length(unique(data2$herd2)),
                           K_1 = 1,
@@ -95,7 +92,7 @@ check_incidence <- function(data,
                         seed = seed,
                         cores = cores,
                         control = list(adapt_delta = 0.99))
-        m[, 1] <- as.matrix(fit, pars = "b[1]")
+        m[, 1] <- as.matrix(fit, pars = "temp_Intercept")
         d[1, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
                        length(extract(fit, pars = "lp__")[[1]]),
@@ -106,15 +103,12 @@ check_incidence <- function(data,
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
         x <- model.matrix(S2i ~ 1, data2)
-        x <- x[, 2, drop = FALSE]
-        x.mean <- colMeans(x)
+        x <- x[, 0, drop = FALSE]
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
                           y = data2$S2i,
-                          K = 1,
-                          X = sweep(x, 2L, x.mean, FUN = "-"),
-                          X_means = as.array(x.mean),
+                          X = x,
                           J_1 = data2$herd2,
                           N_1 = length(unique(data2$herd2)),
                           K_1 = 1,
@@ -132,7 +126,7 @@ check_incidence <- function(data,
                         seed = seed,
                         cores = cores,
                         control = list(adapt_delta = 0.99))
-        m[, 2] <- as.matrix(fit, pars = "b[1]")
+        m[, 2] <- as.matrix(fit, pars = "temp_Intercept")
         d[2, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
                        length(extract(fit, pars = "lp__")[[1]]),
@@ -143,15 +137,12 @@ check_incidence <- function(data,
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
         x <- model.matrix(S2 ~ 1, data2)
-        x <- x[, 2, drop = FALSE]
-        x.mean <- colMeans(x)
+        x <- x[, 0, drop = FALSE]
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
                           y = data2$S2,
-                          K = 1,
-                          X = sweep(x, 2L, x.mean, FUN = "-"),
-                          X_means = as.array(x.mean),
+                          X = x,
                           J_1 = data2$herd2,
                           N_1 = length(unique(data2$herd2)),
                           K_1 = 1,
@@ -169,7 +160,7 @@ check_incidence <- function(data,
                         seed = seed,
                         cores = cores,
                         control = list(adapt_delta = 0.99))
-        m[, 3] <- as.matrix(fit, pars = "b[1]")
+        m[, 3] <- as.matrix(fit, pars = "temp_Intercept")
         d[3, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
                        length(extract(fit, pars = "lp__")[[1]]),
@@ -180,15 +171,12 @@ check_incidence <- function(data,
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1 == 0), ]
         x <- model.matrix(S2i ~ 1, data2)
-        x <- x[, 2, drop = FALSE]
-        x.mean <- colMeans(x)
+        x <- x[, 0, drop = FALSE]
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
         data2$cow2 <- cumsum(c(TRUE, with(data2, cow[-1] != cow[-length(cow)])))
         stan_data <- list(N = nrow(data2),
                           y = data2$S2i,
-                          K = 1,
-                          X = sweep(x, 2L, x.mean, FUN = "-"),
-                          X_means = as.array(x.mean),
+                          X = 0,
                           J_1 = data2$herd2,
                           N_1 = length(unique(data2$herd2)),
                           K_1 = 1,
@@ -206,7 +194,7 @@ check_incidence <- function(data,
                         seed = seed,
                         cores = cores,
                         control = list(adapt_delta = 0.99))
-        m[, 4] <- as.matrix(fit, pars = "b[1]")
+        m[, 4] <- as.matrix(fit, pars = "temp_Intercept")
         d[4, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
                        summary(fit)$summary[1, "n_eff"],
                        length(extract(fit, pars = "lp__")[[1]]),
