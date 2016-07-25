@@ -23,12 +23,13 @@
 #' @author Denis Haine
 #'
 #' @examples
-#' check_bias(sim_list[[1]],
+#' check_bias(sim_list,
 #'            iter = 200,
 #'            warmup = 25,
-#'            chains = 4,
-#'            cores = 4,
-#'            seed = 123)
+#'            chains = 2,
+#'            cores = 2,
+#'            seed = 123,
+#'            nsimul = 5)
 #' @export
 #' @import rstan
 check_bias <- function(data,
