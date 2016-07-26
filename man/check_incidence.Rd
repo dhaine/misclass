@@ -42,7 +42,7 @@ check_incidence(sim_list,
                 chains = 2,
                 cores = 2,
                 seed = 123,
-                nsimul = 5)
+                nsimul = 1)
 }
 \author{
 Denis Haine
