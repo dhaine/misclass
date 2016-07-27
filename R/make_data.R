@@ -75,7 +75,7 @@
 #' sim_list <- pbreplicate(n = 5, expr = make_data(100, 30, "cns"), simplify = FALSE)
 #' @export
 #' @importFrom epiR epi.betabuster
-#' @importFrom stats rnorm rbinom
+#' @importFrom stats rnorm rbinom rbeta
 make_data <- function(n_herd,
                       n_cow,
                       bact = c("saureus", "cns", "other"),
@@ -121,6 +121,8 @@ make_data <- function(n_herd,
                           is.null(se_parall) | is.null(sp_parall) |
                           is.null(se_tri) | is.null(sp_tri)))
         stop('Missing parameter(s).')
+
+    S1 <- v_0k <- u_0jk <- herd <- cow <- quarter <- S2 <- E_h <- E_c <- E_q <- S1i <- S2i <- S1_series <- S2_series <- S1_parall <- S2_parall <- S1_tri <- S2_tri <- NULL
     
     dt <- matrix(NA, nrow = n_herd*n_cow*4, ncol = 8)
     colnames(dt) <- c("herd", "cow", "quarter",
@@ -311,11 +313,11 @@ make_data <- function(n_herd,
     dt <- rbind(atrisk, notatrisk)
     dt <- dt[with(dt, order(herd, cow, quarter)), ]
     ## draw Se and Sp values from beta distributions for S1i and S2i
-    dt$se <- rbeta(1, se$shape1, se$shape2)
+    dt$se <- stats::rbeta(1, se$shape1, se$shape2)
     dt$se <- with(dt, ifelse(se > 0.999999, 0.999999, se))
     if (length(sp_parms == 1))
         dt$sp <- sp_parms
-    else dt$sp <- rbeta(1, sp$shape1, sp$shape2)
+    else dt$sp <- stats::rbeta(1, sp$shape1, sp$shape2)
     if(length(sp_parms) > 1)
         dt$sp <- with(dt, ifelse(sp > 0.999999, 0.999999, sp))
     ## Compute misclassified resuls for S1i and S2i

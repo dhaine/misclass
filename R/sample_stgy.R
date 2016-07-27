@@ -23,14 +23,21 @@
 #' @author Denis Haine
 #'
 #' @examples
-#' sample_stgy(sim_list[[1]],
+#' sim_list <- vector("list", 1)
+#' set.seed(123)
+#' sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FALSE)
+#' sample_stgy(sim_list,
 #'             iter = 200,
 #'             warmup = 25,
-#'             chains = 4,
-#'             cores = 4,
-#'             seed = 123)
+#'             chains = 1,
+#'             cores = 1,
+#'             seed = 123,
+#'             nsimul = 1)
 #' @export
-#' @import rstan
+#' @import Rcpp
+#' @importFrom rstan sampling get_sampler_params extract summary
+#' @importFrom stats model.matrix
+#' @importFrom utils setTxtProgressBar txtProgressBar
 sample_stgy <- function(data,
                         iter = 500,
                         warmup = 100,
@@ -56,21 +63,21 @@ sample_stgy <- function(data,
     colnames(d) <- c("Rhat", "n_eff", "sample_size", "divergent", "treedepth")
 
     count_divergences <- function(fit) {
-        sampler_params <- get_sampler_params(fit, inc_warmup = FALSE)
+        sampler_params <- rstan::get_sampler_params(fit, inc_warmup = FALSE)
         sum(sapply(sampler_params, function(x) c(x[, 'divergent__']))[, 1])
     }
     max_treedepth <- function(fit) {
-        sampler_params <- get_sampler_params(fit, inc_warmup = FALSE)
+        sampler_params <- rstan::get_sampler_params(fit, inc_warmup = FALSE)
         max(sapply(sampler_params, function(x) c(x[, 'treedepth__']))[, 1])
     }
 
-    pb <- txtProgressBar(min = 0, max = nsimul, style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = nsimul, style = 3)
 
     for (i in 1:nsimul) {
         ## 5. Duplicate samples, parallel interpretation on S1 and S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_parall == 0), ]
-        x <- model.matrix(S2_parall ~ E_h, data2)
+        x <- stats::model.matrix(S2_parall ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -89,25 +96,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 1] <- as.matrix(fit, pars = "b[1]")
-        d[1, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[1, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 6. Duplicate samples, parallel interpretation on S1 and single on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_parall == 0), ]
-        x <- model.matrix(S2i ~ E_h, data2)
+        x <- stats::model.matrix(S2i ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -126,25 +133,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 2] <- as.matrix(fit, pars = "b[1]")
-        d[2, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[2, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 7. Duplicate samples, parallel interpretation on S2 and single on S1
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
-        x <- model.matrix(S2_parall ~ E_h, data2)
+        x <- stats::model.matrix(S2_parall ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -163,25 +170,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 3] <- as.matrix(fit, pars = "b[1]")
-        d[3, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[3, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 8. Duplicate samples, series interpretation on S1 and S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_series == 0), ]
-        x <- model.matrix(S2_series ~ E_h, data2)
+        x <- stats::model.matrix(S2_series ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -200,25 +207,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 4] <- as.matrix(fit, pars = "b[1]")
-        d[4, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[4, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 9. Duplicate samples, series interpretation on S1 and single on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_series == 0), ]
-        x <- model.matrix(S2i ~ E_h, data2)
+        x <- stats::model.matrix(S2i ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -237,25 +244,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 5] <- as.matrix(fit, pars = "b[1]")
-        d[5, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[5, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 10. Duplicate samples, series interpretation on S2 and single on S1
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1i == 0), ]
-        x <- model.matrix(S2_series ~ E_h, data2)
+        x <- stats::model.matrix(S2_series ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -274,25 +281,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 6] <- as.matrix(fit, pars = "b[1]")
-        d[6, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[6, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 11. Duplicate samples, parallel interpretation on S1 and series on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_parall == 0), ]
-        x <- model.matrix(S2_series ~ E_h, data2)
+        x <- stats::model.matrix(S2_series ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -311,25 +318,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 7] <- as.matrix(fit, pars = "b[1]")
-        d[7, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[7, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 12. Duplicate samples, series interpretation on S1 and parallel on S2
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_series == 0), ]
-        x <- model.matrix(S2_parall ~ E_h, data2)
+        x <- stats::model.matrix(S2_parall ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -348,25 +355,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 8] <- as.matrix(fit, pars = "b[1]")
-        d[8, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[8, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
         
         ## 13. Triplicate samples (2 ou 3 positives)
         ## Data
         data2 <- data[[i]][which(data[[i]]$S1_tri == 0), ]
-        x <- model.matrix(S2_tri ~ E_h, data2)
+        x <- stats::model.matrix(S2_tri ~ E_h, data2)
         x <- x[, 2, drop = FALSE]
         x.mean <- colMeans(x)
         data2$herd2 <- cumsum(c(TRUE, with(data2, herd[-1] != herd[-length(herd)])))
@@ -385,25 +392,25 @@ sample_stgy <- function(data,
                           K_2 = 1,
                           Z_2 = rep(1, nrow(data2)))
         ## Running
-        fit <- sampling(stanfit,
-                        data = stan_data,
-                        iter = iter,
-                        warmup = warmup,
-                        chains = chains,
-                        seed = seed,
-                        cores = cores,
-                        control = list(adapt_delta = 0.99))
+        fit <- rstan::sampling(stanfit,
+                               data = stan_data,
+                               iter = iter,
+                               warmup = warmup,
+                               chains = chains,
+                               seed = seed,
+                               cores = cores,
+                               control = list(adapt_delta = 0.99))
         m[, 9] <- as.matrix(fit, pars = "b[1]")
-        d[9, 1:5] <- c(summary(fit)$summary[1, "Rhat"],
-                       summary(fit)$summary[1, "n_eff"],
-                       length(extract(fit, pars = "lp__")[[1]]),
+        d[9, 1:5] <- c(rstan::summary(fit)$summary[1, "Rhat"],
+                       rstan::summary(fit)$summary[1, "n_eff"],
+                       length(rstan::extract(fit, pars = "lp__")[[1]]),
                        count_divergences(fit),
                        max_treedepth(fit))
 
         out_list[[i]] <- m
         diag_list[[i]] <- d
 
-        setTxtProgressBar(pb, i)
+        utils::setTxtProgressBar(pb, i)
     }
     close(pb)
     out_list <- append(out_list, diag_list)

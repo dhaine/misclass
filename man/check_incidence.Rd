@@ -36,12 +36,25 @@ quantify bias, and compare relative impact of selection vs. misclassification
 biases.
 }
 \examples{
+<<<<<<< HEAD
 check_incidence(sim_list[[1]],
                 iter = 200,
                 warmup = 25,
                 chains = 4,
                 cores = 4,
                 seed = 123)
+=======
+sim_list <- vector("list", 1)
+set.seed(123)
+sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FALSE)
+check_incidence(sim_list,
+                iter = 200,
+                warmup = 25,
+                chains = 1,
+                cores = 1,
+                seed = 123,
+                nsimul = 1)
+>>>>>>> incidence
 }
 \author{
 Denis Haine
