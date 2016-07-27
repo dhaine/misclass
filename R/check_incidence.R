@@ -23,16 +23,16 @@
 #' @author Denis Haine
 #'
 #' @examples
-#' sim_list <- vector("list", 5)
+#' sim_list <- vector("list", 1)
 #' set.seed(123)
-#' sim_list <- replicate(n = 5, expr = make_data(100, 30, "saureus"), simplify = FALSE)
+#' sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FALSE)
 #' check_incidence(sim_list,
 #'                 iter = 200,
 #'                 warmup = 25,
-#'                 chains = 2,
-#'                 cores = 2,
+#'                 chains = 1,
+#'                 cores = 1,
 #'                 seed = 123,
-#'                 nsimul = 5)
+#'                 nsimul = 1)
 #' @export
 #' @import rstan
 check_incidence <- function(data,
