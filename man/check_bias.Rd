@@ -36,16 +36,16 @@ quantify bias, and compare relative impact of selection vs. misclassification
 biases.
 }
 \examples{
-sim_list <- vector("list", 5)
+sim_list <- vector("list", 1)
 set.seed(123)
-sim_list <- replicate(n = 5, expr = make_data(100, 30, "saureus"), simplify = FALSE)
+sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FALSE)
 check_bias(sim_list,
            iter = 200,
            warmup = 25,
-           chains = 2,
-           cores = 2,
+           chains = 1,
+           cores = 1,
            seed = 123,
-           nsimul = 5)
+           nsimul = 1)
 }
 \author{
 Denis Haine
