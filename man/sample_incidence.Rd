@@ -36,14 +36,6 @@ Fit a Bayesian 3-level Poisson model using Stan to evaluate effect of various
 sampling strategies on biases when looking at incidences.
 }
 \examples{
-<<<<<<< HEAD
-sample_incidence(sim_list[[1]],
-                 iter = 200,
-                 warmup = 25,
-                 chains = 4,
-                 cores = 4,
-                 seed = 123)
-=======
 sim_list <- vector("list", 1)
 set.seed(123)
 sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FALSE)
@@ -54,7 +46,6 @@ sample_incidence(sim_list,
                  cores = 1,
                  seed = 123,
                  nsimul = 1)
->>>>>>> incidence
 }
 \author{
 Denis Haine
