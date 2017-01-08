@@ -1,11 +1,12 @@
 Package: misclass
 Type: Package
 Title: Sampling strategies to control misclassification bias in longitudinal udder health studies
-Version: 0.0.0.9000
-Date: 2016-07-25
+Version: 0.1.0
+Date: 2017-01-08
 Authors@R: c(
 	   person("Denis", "Haine", email = "denis.haine@gmail.com", role = c("aut", "cre")),
-	   person("Simon", "Dufour", email = "simon.dufour@umontreal.ca", role = "aut"))
+	   person("Simon", "Dufour", email = "simon.dufour@umontreal.ca", role = "aut"),
+           person("Henryk Stryhn", email = "hstryhn@upei.ca", role = "aut"))
 Description: Code to run Bayesian evaluation  of misclassification bias.
 License: GPL-2
 Depends: R (>= 3.3.1), Rcpp (>= 0.12.8)
