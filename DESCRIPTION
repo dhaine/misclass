@@ -1,6 +1,6 @@
 Package: misclass
 Type: Package
-Title: Sampling strategies to control misclassification bias in longitudinal udder health studies
+Title: Sampling Strategies to Control Misclassification Bias in Longitudinal Udder Health Studies
 Version: 0.1.0
 Date: 2017-01-08
 Authors@R: c(
