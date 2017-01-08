@@ -7,10 +7,6 @@ Biais de classement dans les études longitudinales de la santé mammaire
 
 [![Build Status](https://travis-ci.org/dhaine/misclass.svg?branch=master)](https://travis-ci.org/dhaine/misclass)
 
--   Denis Haine
--   Faculté de médecine vétérinaire, Université de Montréal
--   <denis.haine@gmail.com>
-
 R package to assess misclassification bias in hierarchical longitudinal studies and the effect of various sampling strategies to control for it. This package is part of the scientific paper "Controlling Misclassification Bias in Longitudinal Udder Health Studies" (submitted to [Preventive Veterinary Medicine](https://www.journals.elsevier.com/preventive-veterinary-medicine)) and the [2017 SVEPM](http://www.svepm2017.org/) proceedings "Sampling Strategies to Control Misclassification Bias in Longitudinal Udder Health Studies" by Denis Haine, Ian Dohoo, Daniel Scholl, Henryk Stryhn, and Simon Dufour.
 
 License
