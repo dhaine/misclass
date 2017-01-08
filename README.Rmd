@@ -19,10 +19,6 @@ knitr::opts_chunk$set(
 
 [![Build Status](https://travis-ci.org/dhaine/misclass.svg?branch=master)](https://travis-ci.org/dhaine/misclass)
 
-* Denis Haine
-* Faculté de médecine vétérinaire, Université de Montréal
-* <denis.haine@gmail.com>
-
 R package to assess misclassification bias in hierarchical longitudinal studies
 and the effect of various sampling strategies to control for it.
 This package is part of the scientific paper "Controlling Misclassification Bias
