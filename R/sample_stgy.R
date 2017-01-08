@@ -26,13 +26,13 @@
 #' sim_list <- vector("list", 1)
 #' set.seed(123)
 #' sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FALSE)
-#' sample_stgy(sim_list,
-#'             iter = 200,
-#'             warmup = 25,
-#'             chains = 1,
-#'             cores = 1,
-#'             seed = 123,
-#'             nsimul = 1)
+#' \dontrun{sample_stgy(sim_list,
+#'                      iter = 200,
+#'                      warmup = 25,
+#'                      chains = 1,
+#'                      cores = 1,
+#'                      seed = 123,
+#'                      nsimul = 1)}
 #' @export
 #' @import Rcpp
 #' @importFrom rstan sampling get_sampler_params extract summary
