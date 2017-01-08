@@ -1,36 +1,18 @@
-\name{misclass-package}
-\alias{misclass-package}
+\name{misclass}
 \alias{misclass}
+\alias{misclass-package}
 \docType{package}
-\title{
-\packageTitle{misclass}
-}
-\description{
-\packageDescription{misclass}
-}
+\title{Sampling strategies to control misclassification bias in longitudinal udder health studies}
+\description{Code to run Bayesian evaluation  of misclassification bias.}
 \details{
-
-The DESCRIPTION file:
-\packageDESCRIPTION{misclass}
-\packageIndices{misclass}
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
+  \tabular{ll}{
+    Package: \tab misclass\cr
+    Type: \tab Package\cr
+    Version: \tab 0.0.0.9000\cr
+    Date: \tab 2016-05-19\cr
+    License: \tab GPL-2\cr
+  }
 }
 \author{
-\packageAuthor{misclass}
-
-Maintainer: \packageMaintainer{misclass}
-}
-\references{
-~~ Literature or other references for background information ~~
-}
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in ~~
-~~ the R documentation directory ~~
-\keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
-\examples{
-~~ simple examples of the most important functions ~~
+  Denis Haine \email{denis.haine@gmail.com}
 }

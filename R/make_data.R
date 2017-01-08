@@ -1,7 +1,7 @@
 #' Create simulated datasets.
 #'
 #' Create datasets from a hypothetical cohort study. Since correlation structures
-#' are often found in udder health studies, the generated datasets are be deemed
+#' are often found in udder health studies, the generated datasets are deemed
 #' to have occurred from the collection of two milk samples collected 1 month
 #' apart from each quarters of a random sample of 30 cows per herd, from 100
 #' dairy herds. The first milk sample (S1) is used to identify quarters at risk of
@@ -12,36 +12,38 @@
 #' (Dufour et al., 2011, 2012), exposures are equally associated with odds of a
 #' prevalent IMI on first milk sample as with odds of IMI acquisition on second
 #' sample. Exposures are randomly associated with odds of eliminating an existing
-#' IMI (OR=1.0). By default, dataset for S. aureus is created.
+#' IMI (OR=1.0). If S. aureus or CNS is chosen, default parameters are used.
+#' Otherwise user has to provide his own.
 #'
 #' @param n_herd Number of herds.
 #' @param n_cow Number of cows per herd.
-#' @param E_hPr Exposure distribution (0 to 1) of the binary herd-level (h) predictor.
-#' @param E_cPr Exposure distribution (0 to 1) of the binary cow-level (c) predictor.
-#' @param E_qPr Exposure distribution (0 to 1) of the binary quarter-level (q) predictor.
-#' @param sigma_sqhPr Herd-level variance (sigma_sq) for prevalence of intra-mammary infection (IMI).
-#' @param sigma_sqcPr Cow-level variance for prevalence of IMI.
-#' @param b0_Pr Intercept for IMI prevalence; aiming at a prevalence of 2.5%.
-#' @param OR_hPr OR of association between herd-level variable and IMI prevalence.
-#' @param OR_cPr OR of association between cow-level variable and IMI prevalence.
-#' @param OR_qPr OR of association between observation-level variable and IMI prevalence.
-#' @param sigma_sqhI Herd-level variance for incidence of IMI.
-#' @param sigma_sqcI Cow-level variance for incidence of IMI.
-#' @param b0_I Intercept for IMI incidence.
-#' @param OR_hI OR of association between herd-level variable and IMI incidence.
-#' @param OR_cI OR of association between cow-level variable and IMI incidence.
-#' @param OR_qI OR of association between observation-level variable and IMI incidence.
-#' @param sigma_sqhEl Herd-level variance for elimination of IMI.
-#' @param sigma_sqcEl Cow-level variance for elimination of IMI.
-#' @param b0_El Intercept for IMI persistency.
-#' @param se_parms Vector for mode and x to determine shape parameters of Beta distribution of sensitivity (Se).
-#' @param sp_parms Vector for mode and x to determine shape parameters of Beta distribution of specificity (Sp).
-#' @param se_series Se improvement or loss associated with sampling strategy: duplicate series.
-#' @param sp_series Sp improvement or loss associated with sampling strategy: duplicate series.
-#' @param se_parall Se improvement or loss associated with sampling strategy: duplicate parallel.
-#' @param sp_parall Sp improvement or loss associated with sampling strategy:duplicate parallel.
-#' @param se_tri Se improvement or loss associated with sampling strategy: triplicate (2 out of 3).
-#' @param sp_tri Sp improvement or loss associated with sampling strategy: triplicate (2 out of 3).
+#' @param bact Type of bacteria: S. aureus, CNS, or other. If other, as to provide parameters.
+#' @param E_hPr Exposure distribution (0 to 1) of the binary herd-level (h) predictor. S. aureus and CNS = 0.5.
+#' @param E_cPr Exposure distribution (0 to 1) of the binary cow-level (c) predictor. S. aureus and CNS = 0.5.
+#' @param E_qPr Exposure distribution (0 to 1) of the binary quarter-level (q) predictor. S. aureus and CNS = 0.5.
+#' @param sigma_sqhPr Herd-level variance (sigma_sq) for prevalence of intra-mammary infection (IMI). S. aureus = 0.14; CNS = 0.363.
+#' @param sigma_sqcPr Cow-level variance for prevalence of IMI. S. aureus = 2.25; CNS = 0.294.
+#' @param b0_Pr Intercept for IMI prevalence; aiming at a prevalence of 2.5\%. S. aureus = -6.7; CNS = -2.15.
+#' @param OR_hPr OR of association between herd-level variable and IMI prevalence. S. aureus and CNS = 3.
+#' @param OR_cPr OR of association between cow-level variable and IMI prevalence. S. aureus and CNS = 3.
+#' @param OR_qPr OR of association between observation-level variable and IMI prevalence. S. aureus and CNS = 3.
+#' @param sigma_sqhI Herd-level variance for incidence of IMI. S. aureus = 0.838; CNS = 0.27.
+#' @param sigma_sqcI Cow-level variance for incidence of IMI. S. aureus = 2.926; CNS = 0.256.
+#' @param b0_I Intercept for IMI incidence. S. aureus = -8.3; CNS = -2.4.
+#' @param OR_hI OR of association between herd-level variable and IMI incidence. S. aureus and CNS = 3.
+#' @param OR_cI OR of association between cow-level variable and IMI incidence. S. aureus and CNS = 3.
+#' @param OR_qI OR of association between observation-level variable and IMI incidence. S. aureus and CNS = 3.
+#' @param sigma_sqhEl Herd-level variance for elimination of IMI. S. aureus = 0.15; CNS = 0.112.
+#' @param sigma_sqcEl Cow-level variance for elimination of IMI. S. aureus = 2.246; CNS = 0.7.
+#' @param b0_El Intercept for IMI persistency. S. aureus = -0.6; CNS = 1.6.
+#' @param se_parms Vector for mode and x to determine shape parameters of Beta distribution of sensitivity (Se). S. aureus = c(0.90, 0.85); CNS = c(0.60, 0.55).
+#' @param sp_parms Vector for mode and x to determine shape parameters of Beta distribution of specificity (Sp). S. aureus = 1; CNS = c(0.95, 0.90).
+#' @param se_series Se improvement or loss associated with sampling strategy: duplicate series. S. aureus = -0.1; CNS = -0.25.
+#' @param sp_series Sp improvement or loss associated with sampling strategy: duplicate series. S. aureus = 0; CNS = 0.05.
+#' @param se_parall Se improvement or loss associated with sampling strategy: duplicate parallel. S. aureus = 0.1; CNS = 0.15.
+#' @param sp_parall Sp improvement or loss associated with sampling strategy:duplicate parallel. S. aureus = 0; CNS = -0.05.
+#' @param se_tri Se improvement or loss associated with sampling strategy: triplicate (2 out of 3). S. aureus = 0; CNS = 0.
+#' @param sp_tri Sp improvement or loss associated with sampling strategy: triplicate (2 out of 3). S. aureus = 0; CNS = 0.10.
 #'
 #' @return A data frame with variables:
 #' \item{herd}{Herd id.}
@@ -67,41 +69,61 @@
 #' sim_list <- vector("list", 5)
 #' # Do not forget to set seed for replication
 #' set.seed(123)
-#' sim_list <- replicate(n = 5, expr = makeData(100, 30), simplify = FALSE)
+#' sim_list <- replicate(n = 5, expr = make_data(100, 30, "saureus"), simplify = FALSE)
 #' # Or with a progress bar
 #' require(pbapply)
-#' sim_list <- pbreplicate(n = 5, expr = makeData(100, 30), simplify = FALSE)
+#' sim_list <- pbreplicate(n = 5, expr = make_data(100, 30, "cns"), simplify = FALSE)
 #' @export
 #' @importFrom epiR epi.betabuster
-#' @importFrom stats rnorm rbinom
-makeData <- function(n_herd,
-                     n_cow,
-                     E_hPr = 0.5,
-                     E_cPr = 0.5,
-                     E_qPr = 0.5,
-                     sigma_sqhPr = 0.14,
-                     sigma_sqcPr = 2.25,
-                     b0_Pr = -6.7,
-                     OR_hPr = 3,
-                     OR_cPr = 3,
-                     OR_qPr = 3,
-                     sigma_sqhI = 0.838,
-                     sigma_sqcI = 2.926,
-                     b0_I = -8.3,
-                     OR_hI = 3,
-                     OR_cI = 3,
-                     OR_qI = 3,
-                     sigma_sqhEl = 0.15,
-                     sigma_sqcEl = 2.246,
-                     b0_El = -0.6,
-                     se_parms = c(0.90, 0.85),
-                     sp_parms = 1,
-                     se_series = -0.1,
-                     sp_series = 0,
-                     se_parall = 0.1,
-                     sp_parall = 0,
-                     se_tri = 0,
-                     sp_tri = 0) {
+#' @importFrom stats rnorm rbinom rbeta
+make_data <- function(n_herd,
+                      n_cow,
+                      bact = c("saureus", "cns", "other"),
+                      E_hPr = NULL,
+                      E_cPr = NULL,
+                      E_qPr = NULL,
+                      sigma_sqhPr = NULL,
+                      sigma_sqcPr = NULL,
+                      b0_Pr = NULL,
+                      OR_hPr = NULL,
+                      OR_cPr = NULL,
+                      OR_qPr = NULL,
+                      sigma_sqhI = NULL,
+                      sigma_sqcI = NULL,
+                      b0_I = NULL,
+                      OR_hI = NULL,
+                      OR_cI = NULL,
+                      OR_qI = NULL,
+                      sigma_sqhEl = NULL,
+                      sigma_sqcEl = NULL,
+                      b0_El = NULL,
+                      se_parms = NULL,
+                      sp_parms = NULL,
+                      se_series = NULL,
+                      sp_series = NULL,
+                      se_parall = NULL,
+                      sp_parall = NULL,
+                      se_tri = NULL,
+                      sp_tri = NULL) {
+    if(missing(bact))
+        stop('Please choose type of bacteria.')
+    if(!(bact %in% c("saureus", "cns", "other")))
+        stop('Please choose between saureus, cns, or other.')
+    if(bact == "other" & (is.null(E_hPr) | is.null(E_cPr) | is.null(E_qPr) |
+                          is.null(sigma_sqhPr) | is.null(sigma_sqcPr) |
+                          is.null(b0_Pr) | is.null(OR_hPr) | is.null(OR_cPr) |
+                          is.null(OR_qPr) | is.null(sigma_sqhI) |
+                          is.null(sigma_sqcI) | is.null(b0_I) | is.null(OR_hI) |
+                          is.null(OR_cI) | is.null(OR_qI) | is.null(sigma_sqhEl) |
+                          is.null(sigma_sqcEl) | is.null(b0_El) |
+                          is.null(se_parms) | is.null(sp_parms) |
+                          is.null(se_series) | is.null(sp_series) |
+                          is.null(se_parall) | is.null(sp_parall) |
+                          is.null(se_tri) | is.null(sp_tri)))
+        stop('Missing parameter(s).')
+
+    S1 <- v_0k <- u_0jk <- herd <- cow <- quarter <- S2 <- E_h <- E_c <- E_q <- S1i <- S2i <- S1_series <- S2_series <- S1_parall <- S2_parall <- S1_tri <- S2_tri <- NULL
+    
     dt <- matrix(NA, nrow = n_herd*n_cow*4, ncol = 8)
     colnames(dt) <- c("herd", "cow", "quarter",
                       "S1", "S2",
@@ -109,6 +131,92 @@ makeData <- function(n_herd,
     dt[, 1] <- rep(1:n_herd, each = n_cow*4)
     dt[, 2] <- rep(1:(n_herd*n_cow), each = 4)
     dt[, 3] <- 1:nrow(dt)
+
+    if(bact == "saureus") {
+        E_hPr = 0.5
+        E_cPr = 0.5
+        E_qPr = 0.5
+        sigma_sqhPr = 0.14
+        sigma_sqcPr = 2.25
+        b0_Pr = -6.7
+        OR_hPr = 3
+        OR_cPr = 3
+        OR_qPr = 3
+        sigma_sqhI = 0.838
+        sigma_sqcI = 2.926
+        b0_I = -8.3
+        OR_hI = 3
+        OR_cI = 3
+        OR_qI = 3
+        sigma_sqhEl = 0.15
+        sigma_sqcEl = 2.246
+        b0_El = -0.6
+        se_parms = c(0.90, 0.85)
+        sp_parms = 1
+        se_series = -0.1
+        sp_series = 0
+        se_parall = 0.1
+        sp_parall = 0
+        se_tri = 0
+        sp_tri = 0
+    }
+    if(bact == "cns") {
+        E_hPr = 0.5
+        E_cPr = 0.5
+        E_qPr = 0.5
+        sigma_sqhPr = 0.363
+        sigma_sqcPr = 0.294
+        b0_Pr = -2.15
+        OR_hPr = 3
+        OR_cPr = 3
+        OR_qPr = 3
+        sigma_sqhI = 0.27
+        sigma_sqcI = 0.256
+        b0_I = -2.4
+        OR_hI = 3
+        OR_cI = 3
+        OR_qI = 3
+        sigma_sqhEl = 0.112
+        sigma_sqcEl = 0.7
+        b0_El = 1.6
+        se_parms = c(0.60, 0.55)
+        sp_parms = c(0.95, 0.90)
+        se_series = -0.25
+        sp_series = 0.05
+        se_parall = 0.15
+        sp_parall = -0.05
+        se_tri = 0
+        sp_tri = 0.10
+    }
+    else {
+        E_hPr = E_hPr
+        E_cPr = E_cPr
+        E_qPr = E_qPr
+        sigma_sqhPr = sigma_sqhPr
+        sigma_sqcPr = sigma_sqcPr
+        b0_Pr = b0_Pr
+        OR_hPr = OR_hPr
+        OR_cPr = OR_cPr
+        OR_qPr = OR_qPr
+        sigma_sqhI = sigma_sqhI
+        sigma_sqcI = sigma_sqcI
+        b0_I = b0_I
+        OR_hI = OR_hI
+        OR_cI = OR_cI
+        OR_qI = OR_qI
+        sigma_sqhEl = sigma_sqhEl
+        sigma_sqcEl = sigma_sqcEl
+        b0_El = b0_El
+        se_parms = se_parms
+        sp_parms = sp_parms
+        se_series = se_series
+        sp_series = sp_series
+        se_parall = se_parall
+        sp_parall = sp_parall
+        se_tri = se_tri
+        sp_tri = sp_tri
+    }
+
     se <- epiR::epi.betabuster(mode = se_parms[1], conf = 0.80,
                                greaterthan = TRUE, x = se_parms[2],
                                conf.level = 0.95, max.shape1 = 100,
@@ -205,11 +313,11 @@ makeData <- function(n_herd,
     dt <- rbind(atrisk, notatrisk)
     dt <- dt[with(dt, order(herd, cow, quarter)), ]
     ## draw Se and Sp values from beta distributions for S1i and S2i
-    dt$se <- rbeta(1, se$shape1, se$shape2)
+    dt$se <- stats::rbeta(1, se$shape1, se$shape2)
     dt$se <- with(dt, ifelse(se > 0.999999, 0.999999, se))
     if (length(sp_parms == 1))
         dt$sp <- sp_parms
-    else dt$sp <- rbeta(1, sp$shape1, sp$shape2)
+    else dt$sp <- stats::rbeta(1, sp$shape1, sp$shape2)
     if(length(sp_parms) > 1)
         dt$sp <- with(dt, ifelse(sp > 0.999999, 0.999999, sp))
     ## Compute misclassified resuls for S1i and S2i
