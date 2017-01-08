@@ -1,8 +1,8 @@
-#' Fit Bayesian 3-level Poisson model to evaluate sampling strategy for
-#' misclassification in incidence evaluation.
+#' Fit Bayesian 3-level Poisson model to evaluate sampling strategies to correct
+#' bias of incidence evaluation.
 #'
 #' Fit a Bayesian 3-level Poisson model using Stan to evaluate effect of various
-#' sampling strategies on biases when looking at incidences.
+#' sampling strategies on biases when looking at incidence.
 #'
 #' @useDynLib misclass, .registration = TRUE
 #' @param data Data file.

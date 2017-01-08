@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_incidence.R
 \name{check_incidence}
 \alias{check_incidence}
-\title{Fit Bayesian 3-level Poisson model to evaluate incidence}
+\title{Fit Bayesian 3-level Poisson model to assess bias of measure of incidence}
 \usage{
 check_incidence(data, iter = 500, warmup = 100, chains = 4, cores,
   seed = 123, nsimul)

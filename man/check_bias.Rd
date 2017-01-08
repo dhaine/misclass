@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_bias.R
 \name{check_bias}
 \alias{check_bias}
-\title{Fit Bayesian 3-level logistic model to evaluate misclassification.}
+\title{Fit Bayesian 3-level logistic model to assess bias of measure of association.}
 \usage{
 check_bias(data, iter = 500, warmup = 100, chains = 4, cores,
   seed = 123, nsimul)

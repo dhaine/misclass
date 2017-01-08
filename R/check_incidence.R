@@ -1,4 +1,4 @@
-#' Fit Bayesian 3-level Poisson model to evaluate incidence
+#' Fit Bayesian 3-level Poisson model to assess bias of measure of incidence
 #'
 #' Fit a Bayesian 3-level Poisson model using Stan to evaluate true incidence,
 #' quantify bias, and compare relative impact of selection vs. misclassification

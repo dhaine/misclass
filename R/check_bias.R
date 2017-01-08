@@ -1,4 +1,4 @@
-#' Fit Bayesian 3-level logistic model to evaluate misclassification.
+#' Fit Bayesian 3-level logistic model to assess bias of measure of association.
 #'
 #' Fit a Bayesian 3-level logistic model using Stan to evaluate true association,
 #' quantify bias, and compare relative impact of selection vs. misclassification

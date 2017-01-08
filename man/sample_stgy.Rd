@@ -2,8 +2,8 @@
 % Please edit documentation in R/sample_stgy.R
 \name{sample_stgy}
 \alias{sample_stgy}
-\title{Fit Bayesian 3-level logistic model to evaluate sampling strategy for
-misclassification.}
+\title{Fit Bayesian 3-level logistic model to evaluate sampling strategies to correct
+for presence of bias of measure of association.}
 \usage{
 sample_stgy(data, iter = 500, warmup = 100, chains = 4, cores,
   seed = 123, nsimul)
@@ -33,7 +33,7 @@ An object of class \code{stanfit}.
 }
 \description{
 Fit a Bayesian 3-level logistic model using Stan to evaluate effect of various
-sampling strategies on biases.
+sampling strategies on biases of measure of association.
 }
 \examples{
 sim_list <- vector("list", 1)

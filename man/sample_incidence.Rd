@@ -2,8 +2,8 @@
 % Please edit documentation in R/sample_incidence.R
 \name{sample_incidence}
 \alias{sample_incidence}
-\title{Fit Bayesian 3-level Poisson model to evaluate sampling strategy for
-misclassification in incidence evaluation.}
+\title{Fit Bayesian 3-level Poisson model to evaluate sampling strategies to correct
+bias of incidence evaluation.}
 \usage{
 sample_incidence(data, iter = 500, warmup = 100, chains = 4, cores,
   seed = 123, nsimul)
@@ -33,7 +33,7 @@ An object of class \code{stanfit}.
 }
 \description{
 Fit a Bayesian 3-level Poisson model using Stan to evaluate effect of various
-sampling strategies on biases when looking at incidences.
+sampling strategies on biases when looking at incidence.
 }
 \examples{
 sim_list <- vector("list", 1)

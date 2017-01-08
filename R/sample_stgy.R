@@ -1,8 +1,8 @@
-#' Fit Bayesian 3-level logistic model to evaluate sampling strategy for
-#' misclassification.
+#' Fit Bayesian 3-level logistic model to evaluate sampling strategies to correct
+#' for presence of bias of measure of association.
 #'
 #' Fit a Bayesian 3-level logistic model using Stan to evaluate effect of various
-#' sampling strategies on biases.
+#' sampling strategies on biases of measure of association.
 #'
 #' @useDynLib misclass, .registration = TRUE
 #' @param data Data file.
