@@ -1,0 +1,18 @@
+citHeader("To cite misclass in publications use:")
+
+citEntry(entry = "InProceedings",
+  title        = "Sampling Strategies to Control for Misclassification Bias in Longitudinal Udder Health Studies",
+  author       = personList(as.person("Denis Haine"),
+                   as.person("Ian Dohoo"),
+                   as.person("Daniel Scholl"),
+                   as.person("Henryk Stryhn"),
+                   as.person("Simon Dufour")),
+  booktitle    = "Proceedings",
+  organization = "Society for Veterinary Epidemiology and Preventive Medicine",
+  year         = "2017",
+
+  textVersion  =
+  paste("Denis Haine, Ian Dohoo, Daniel Scholl, Henryk Stryhn, Simon Dufour (2017).",
+        "Sampling Strategies to Control for Misclassification Bias in Longitudinal Udder Health Studies.",
+        "Proceedings of the Society for Veterinary Epidemiology and Preventive Medicine (SVEPM).")
+)
