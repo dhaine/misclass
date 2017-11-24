@@ -9,7 +9,7 @@ citEntry(entry = "Article",
   journal    = "Preventive Veterinary Medicine",
   year         = "2017",
   pages = "in press",
-  url = "https://doi.org/10.1016/j.prevetmed.2017.11.010"
+  url = "https://doi.org/10.1016/j.prevetmed.2017.11.010",
 
   textVersion  =
   paste("Denis Haine, Ian Dohoo, Daniel Scholl, Simon Dufour (2017).",
