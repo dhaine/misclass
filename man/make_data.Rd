@@ -101,7 +101,7 @@ intramammary infection (IMI) at the beginning of the cohort, while the second
 (S2) is used to identify the outcome (acquisition of a new IMI). Three
 hypothetical exposures E_q, E_c, E_h (quarter, cow, and herd level) with known
 strength of association (OR~3.0) are generated. As it is often the case
-(Dufour et al., 2011, 2012), exposures are equally associated with odds of a
+(Dufour et al., 2012), exposures are equally associated with odds of a
 prevalent IMI on first milk sample as with odds of IMI acquisition on second
 sample. Exposures are randomly associated with odds of eliminating an existing
 IMI (OR=1.0). If S. aureus or CNS is chosen, default parameters are used.
@@ -120,4 +120,3 @@ sim_list <- pbreplicate(n = 5, expr = make_data(100, 30, "cns"), simplify = FALS
 \references{
 Dufour, S., Dohoo, I.R., Barkema, H.W., DesCôteaux, L., DeVries, T.J., Reyher, K.K., Roy, J.-P., Scholl, D.T., 2012 \emph{Epidemiology of coagulase-negative staphylococci intramammary infection in dairy cattle and the effect of bacteriological culture misclassification}. Journal of Dairy Science 95(6):3110-3124.
 }
-

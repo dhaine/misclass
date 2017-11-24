@@ -1,0 +1,19 @@
+url: http://dhaine.github.io/misclass
+
+template:
+  params:
+    bootswatch: yeti
+
+reference:
+  - title: "Creating datasets"
+    desc:  "How to create datasets of longitudinal cohort studies."
+    contents:
+    - make_data
+  - title: "Checking presence of bias"
+    contents:
+    - check_bias
+    - check_incidence
+  - title: "Checking effect of improving diagnostic tests"
+    contents:
+    - sample_stgy
+    - sample_incidence

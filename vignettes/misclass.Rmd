@@ -1,0 +1,261 @@
+---
+title: "Controlling misclassification bias in longitudinal udder health studies"
+author: "Denis Haine"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Controlling misclassification bias}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+references:
+- id: dufour2012
+  title: Epidemiology of coagulase-negative staphylococci intramammary infection in dairy cattle and the effect of bacteriological culture misclassification
+  author:
+  - family: Dufour
+    given: Simon
+  - family: Dohoo
+    given: Ian
+  - family: Barkema
+    given: Herman
+  - family: DesCôteaux
+    given: Luc
+  - family: DeVries
+    given: Trevor
+  - family: Reyher
+    given: Kristen
+  - family: Scholl
+    given: Daniel
+  container-title: Journal of Dairy Sciences
+  volume: 95
+  issue: 6
+  page: 3110-3124
+  type: article-journal
+  issued:
+    year: 2012
+csl: preventive-veterinary-medicine.csl
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Using imperfect tests may lead to biased estimates of disease frequency and of
+associations between risk factors and disease.
+For instance in longitudinal udder health studies, both quarters at risk and
+incident intramammary infections (IMI) can be wrongly identified, resulting in
+selection and misclassification bias, respectively.
+Diagnostic accuracy can possibly be improved by using duplicate or triplicate
+samples for identifying quarters at risk and, subsequently, incident IMI.
+
+This package allows the udder health researcher to estimate the potential biases
+that would be present in his/her study according to pathogen, population, and test
+characteristics.
+Improvement in sensitivity (Se) and/or specificity (Sp) of the tests can also be
+assessed with the package to help the design and planning of the study.
+The package was developed for the paper [Diagnosing intramammary infection:
+Controlling misclassification bias in longitudinal udder health
+studies](https://doi.org/10.1016/j.prevetmed.2017.11.010), by D. Haine, I.
+Dohoo, D. Scholl, and S. Dufour.
+Full description of the methodology is provided in the above paper.
+The approach in the paper used many simulations to explore various biases (i.e.
+had to resort to cloud computing for these lengthy simulations), but the
+researcher interested in assessing his/her study design can use the package with
+less simulations to have an indication on the best planning for his/her study.
+This is what is presented hereafter.
+
+The package is installed from Github:
+```{r, eval=FALSE}
+devtools::install_github('dhaine/misclass')
+```
+
+It is loaded into your session with:
+```{r}
+library(misclass)
+```
+
+The package uses prior Beta distributions for sensitivity and specificity of the
+diagnostic test(s), and logistic and Poisson 3-level (quarters within cows
+within herds) regression models for evaluating cluster-specific association
+(odds ratio) and incidence.
+The models are implemented using the [Stan](http://mc-stan.org/) modelling
+language.
+
+## Creating an hypothetical cohort study
+
+The function `make_data` allows the creation of datasets simulating an
+hypothetical cohort study.
+Since correlation structures are often found in udder health studies, the
+generated datasets are deemed to have occurred from the collection of two milk
+samples collected 1 month apart from each quarters of a random sample of cows
+per herd, from a given number of dairy herds.
+The first milk sample (S~1~) is used to identify quarters at risk of intramammary
+infection (IMI) at the beginning of the cohort, while the second (S~2~) is used to
+identify the outcome (acquisition of a new IMI).
+Three hypothetical exposures `E_q`, `E_c`, `E_h` (quarter, cow, and herd level)
+with known strength of association are generated.
+As it is often the case [@dufour2012], exposures are equally associated with
+odds of a prevalent IMI on first milk sample as with odds of IMI acquisition on
+second sample.
+Exposures are randomly associated with odds of eliminating an existing IMI (OR =
+1.0).
+If *S. aureus* or CNS (coagulase-negative staphylococci) is chosen, default
+parameters are used.
+Otherwise user has to provide his/her own.
+
+So let's say our researcher wants to run a longitudinal study where he/she will
+recruit 20 herds, and within each herd 20 cows will be sampled.
+
+```{r}
+sim_list <- vector("list", 10)
+set.seed(123)
+sim_list <- replicate(n = 10, expr = make_data(20, 20, "cns"), simplify = FALSE)
+```
+In the above code, first five empty lists are created that will hold the
+simulated datasets.
+Then a seed is set for reproducibility.
+Then the `make_data` function is used to create a dataset made of 20 herds, 20
+cows per herd, with the default parameter values for CNS (see `?make_data` for
+setting parameters).
+This is replicated 10 times to allow for 10 simulations later on.
+
+Increasing Se and/or Sp is commonly achieved in udder health studies by carrying
+on duplicate or triplicate samplings with parallel or series interpretation.
+The gains or losses in Se/Sp are added/substracted to/from the original
+distributions for Se and Sp, and biased S~1~' and S~2~' variables are generated.
+Note that you can replace duplicate/triplicate samplings by whatever value you
+hope a different test would bring to your study.
+
+## Checking presence of bias for association measure
+
+The `check_bias` function fit a Bayesian logistic regression model to evaluate
+the true association, and the association in presence of selection and/or
+misclassification bias.
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+bias_or <- check_bias(sim_list,
+                      iter = 250,
+                      warmup = 50,
+                      chains = 1,
+                      cores = 1,
+                      seed = 123,
+                      nsimul = 10)
+```
+
+The object created, `bias_or` is a list holding the results for the 10
+simulations with, for each simulation, the values for the incidence (the first 5
+elements of the list, as we ran 5 simulations), i.e. true association, single
+sample, selection bias only, and misclassification bias only, and diagnostic
+parameters in the next 5 elements of the list (Rhat, n_eff, etc.).
+You can use `str(bias_or)` to check the structure of this list.
+
+We can put each together into separate matrices:
+
+```{r}
+diag <- do.call(rbind, bias_or[11:20])
+bias_check <- do.call(rbind, bias_or[1:10])
+```
+
+### Diagnostics
+
+You can run several diagnostics checks.
+More info on diagnostics can be found on the [Stan
+wiki](https://github.com/stan-dev/stan/wiki/Stan-Best-Practices) page.
+
+```{r, fig.show='hold'}
+## Distribution of Rhat 
+hist(diag[, 1])
+## Ratio n_eff/sample_size
+hist(diag[, 2] / diag[, 3])
+```
+
+```{r}
+Rh <- diag[, 1]
+Rh[Rh > 1.1]
+summary(diag)
+```
+
+## Assess bias
+
+A summary of the different OR can be obtained:
+
+```{r}
+summary(bias_check)
+
+exp(median(bias_check[, 1]))
+exp(median(bias_check[, 4]))
+```
+
+We see that the misclassification bias move the association towards the null
+value (OR of `r round(exp(median(bias_check[, 4])), 2)` versus true OR of 
+`r round(exp(median(bias_check[, 1])), 2)`).
+
+We can generate a density plot to visualize the posterior distributions.
+But first let's write a function to "densify" the data:
+
+```{r}
+## Densify data to be used in a density plot 
+densify <- function(df, simul) {
+    ncolumns <- ncol(df)
+    dflist <- list()
+    CrI <- matrix(NA, nrow = ncolumns, ncol = 3)
+    colnames(CrI) <- c("q2.5", "q50", "q97.5")
+    for (i in 1:ncolumns) {
+        pre.dens <- reshape2::melt(df[, i])
+        pre.dens <- exp(pre.dens)
+        CrI[i, ] <- quantile(df[, i], c(.025, .5, .975))
+        dens <- density(pre.dens$value)
+        dens <- data.frame(x = dens$x, y = dens$y)
+        dens$simul <- simul[i]
+        dflist[[i]] <- dens
+    }
+    densified <- do.call(rbind, dflist)
+    out_list <- list(densified, CrI)
+    out_list
+}
+
+bias_dens <- densify(bias_check,
+                     simul = c("True association",
+                               "Single sample",
+                               "Selection bias only",
+                               "Misclassificiation bias only"))
+```
+
+```{r, fig.width=6, fig.height=4}
+library(ggplot2)
+ggplot(bias_dens[[1]], aes(x, y, colour = simul)) +
+    geom_line() +
+    xlab("Odds ratio") +
+    ylab("Density") +
+    coord_cartesian(xlim = c(0, 6)) +
+    scale_x_continuous(breaks = seq(0, 6, 1)) +
+    guides(colour = guide_legend(title = NULL)) +
+    theme(legend.position = c(.7, .7))
+```
+
+## Checking the effect of different sampling strategies
+
+The same can be done for evaluating the effect of duplicate or triplicate
+samplings (i.e., modifying the Se/Sp).
+We're not running the code but it would be:
+
+```{r, eval=FALSE}
+stgy_or <- sample_stgy(sim_list,
+                       iter = 250,
+                       warmup = 50,
+                       chains = 1,
+                       cores = 1,
+                       seed = 123,
+                       nsimul = 10)
+```
+
+## Measure of incidence
+
+Instead of using `check_bias` and `smply_stgy` functions, you use
+`check_incidence` and `sample_incidence`, respectively.
+
+Note that Poisson models are slower to converge.
+
+## References
