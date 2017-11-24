@@ -7,3 +7,4 @@ cleanup*
 ^README-.*\.png$
 ^docs$
 ^_pkgdown\.yml$
+^README\.html

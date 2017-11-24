@@ -56,7 +56,7 @@
       <h1>Controlling misclassification bias in longitudinal udder health studies</h1>
                         <h4 class="author">Denis Haine</h4>
             
-            <h4 class="date">2017-11-23</h4>
+            <h4 class="date">2017-11-24</h4>
           </div>
 
     
@@ -72,7 +72,7 @@
 <div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="co">#&gt; Loading required package: Rcpp</span></div></code></pre>
 <p>The package uses prior Beta distributions for sensitivity and specificity of the diagnostic test(s), and logistic and Poisson 3-level (quarters within cows within herds) regression models for evaluating cluster-specific association (odds ratio) and incidence. The models are implemented using the <a href="http://mc-stan.org/">Stan</a> modelling language.</p>
 <section id="creating-an-hypothetical-cohort-study" class="level2"><h2>Creating an hypothetical cohort study</h2>
-<p>The function <code>make_data</code> allows the creation of datasets simulating an hypothetical cohort study. Since correlation structures are often found in udder health studies, the generated datasets are deemed to have occurred from the collection of two milk samples collected 1 month apart from each quarters of a random sample of cows per herd, from a given number of dairy herds. The first milk sample (S<sub>1</sub>) is used to identify quarters at risk of intramammary infection (IMI) at the beginning of the cohort, while the second (S<sub>2</sub>) is used to identify the outcome (acquisition of a new IMI). Three hypothetical exposures <code>E_q</code>, <code>E_c</code>, <code>E_h</code> (quarter, cow, and herd level) with known strength of association are generated. As it is often the case <span class="citation" data-cites="dufour2012">(Dufour et al., 2012)</span>, exposures are equally associated with odds of a prevalent IMI on first milk sample as with odds of IMI acquisition on second sample. Exposures are randomly associated with odds of eliminating an existing IMI (OR = 1.0). If <em>S. aureus</em> or CNS (coagulase-negative staphylococci) is chosen, default parameters are used. Otherwise user has to provide his/her own.</p>
+<p>The function <code>make_data</code> allows the creation of datasets simulating an hypothetical cohort study. Since correlation structures are often found in udder health studies, the generated datasets are deemed to have occurred from the collection of two milk samples collected 1 month apart from each quarters of a random sample of cows per herd, from a given number of dairy herds. The first milk sample (S<sub>1</sub>) is used to identify quarters at risk of intramammary infection (IMI) at the beginning of the cohort, while the second (S<sub>2</sub>) is used to identify the outcome (acquisition of a new IMI). Three hypothetical exposures <code>E_q</code>, <code>E_c</code>, <code>E_h</code> (quarter, cow, and herd level) with known strength of association are generated. As it is often the case <span class="citation" data-cites="dufour2012">(Dufour et al. 2012)</span>, exposures are equally associated with odds of a prevalent IMI on first milk sample as with odds of IMI acquisition on second sample. Exposures are randomly associated with odds of eliminating an existing IMI (OR = 1.0). If <em>S. aureus</em> or CNS (coagulase-negative staphylococci) is chosen, default parameters are used. Otherwise user has to provide his/her own.</p>
 <p>So let’s say our researcher wants to run a longitudinal study where he/she will recruit 20 herds, and within each herd 20 cows will be sampled.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">sim_list &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>, <span class="dv">10</span>)</div>
 <div class="sourceLine" id="2" href="#2" data-line-number="2">
@@ -207,7 +207,7 @@
 </section><section id="references" class="level2 unnumbered"><h2>References</h2>
 <div id="refs" class="references">
 <div id="ref-dufour2012">
-<p>Dufour, S., Dohoo, I., Barkema, H., DesCôteaux, L., DeVries, T., Reyher, K., Scholl, D., 2012. Epidemiology of coagulase-negative staphylococci intramammary infection in dairy cattle and the effect of bacteriological culture misclassification. Journal of Dairy Sciences 95, 3110–3124.</p>
+<p>Dufour, Simon, Ian Dohoo, Herman Barkema, Luc DesCôteaux, Trevor DeVries, Kristen Reyher, and Daniel Scholl. 2012. “Epidemiology of Coagulase-Negative Staphylococci Intramammary Infection in Dairy Cattle and the Effect of Bacteriological Culture Misclassification.” <em>Journal of Dairy Sciences</em> 95 (6): 3110–24.</p>
 </div>
 </div>
 </section>

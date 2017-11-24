@@ -32,7 +32,6 @@ references:
   type: article-journal
   issued:
     year: 2012
-csl: preventive-veterinary-medicine.csl
 ---
 
 ```{r setup, include = FALSE}
