@@ -50,4 +50,3 @@ sim_list <- replicate(n = 1, expr = make_data(100, 30, "saureus"), simplify = FA
 \author{
 Denis Haine
 }
-

@@ -9,7 +9,7 @@
 #' (S2) is used to identify the outcome (acquisition of a new IMI). Three
 #' hypothetical exposures E_q, E_c, E_h (quarter, cow, and herd level) with known
 #' strength of association (OR~3.0) are generated. As it is often the case
-#' (Dufour et al., 2011, 2012), exposures are equally associated with odds of a
+#' (Dufour et al., 2012), exposures are equally associated with odds of a
 #' prevalent IMI on first milk sample as with odds of IMI acquisition on second
 #' sample. Exposures are randomly associated with odds of eliminating an existing
 #' IMI (OR=1.0). If S. aureus or CNS is chosen, default parameters are used.

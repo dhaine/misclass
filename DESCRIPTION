@@ -1,8 +1,8 @@
 Package: misclass
 Type: Package
 Title: Sampling Strategies to Control Misclassification Bias in Longitudinal Udder Health Studies
-Version: 0.1.0
-Date: 2017-01-08
+Version: 0.1.1
+Date: 2017-11-23
 Authors@R: c(
 	   person("Denis", "Haine", email = "denis.haine@gmail.com", role = c("aut", "cre")),
 	   person("Simon", "Dufour", email = "simon.dufour@umontreal.ca", role = "aut"),
@@ -12,10 +12,15 @@ Description: Code to run Bayesian evaluation  of misclassification bias.
 License: GPL-2
 Depends: R (>= 3.3.1), Rcpp (>= 0.12.8)
 Imports: epiR (>= 0.9-79), rstan (>= 2.14.1), methods
-Suggests: pbapply
+Suggests: pbapply,
+    knitr,
+    rmarkdown,
+    ggplot2,
+    reshape2
 LinkingTo: StanHeaders (>= 2.14.0), rstan (>= 2.14.1), BH (>= 1.62.0-1), Rcpp (>= 0.12.8), RcppEigen
 RcppModules: stan_fit4logistic_mod, stan_fit4poisson_mod
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 NeedsCompilation: yes
+VignetteBuilder: knitr

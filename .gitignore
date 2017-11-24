@@ -3,7 +3,7 @@
 
 *~
 .#*
-
 # no R history
 .Rhistory
 .RData
+inst/doc
