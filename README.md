@@ -6,6 +6,8 @@
 [![Build
 Status](https://travis-ci.org/dhaine/misclass.svg?branch=master)](https://travis-ci.org/dhaine/misclass)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/misclass)](https://cran.r-project.org/package=misclass)
+[![Project Status: Moved to http://codeberg.org/dhaine/misclass – The project has been moved to a new location, and the version at that location should be considered authoritative.](https://www.repostatus.org/badges/latest/moved.svg)](https://www.repostatus.org/#moved) to [http://codeberg.org/dhaine/misclass](http://codeberg.org/dhaine/misclass)
+
 
 R package to assess misclassification bias in hierarchical longitudinal
 studies and the effect of various sampling strategies to control for it.
@@ -80,12 +82,3 @@ situations but efforts can be spared by holding to a single sampling
 approach in others. When designing longitudinal studies, evaluating
 potential biases and best sampling strategy is as critical as the choice
 of test.
-
-## Installation
-
-You can get the most current version from **GitHub** with **devtools**
-package:
-
-``` r
-devtools::install_github('dhaine/misclass')
-```
