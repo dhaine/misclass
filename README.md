@@ -81,12 +81,3 @@ situations but efforts can be spared by holding to a single sampling
 approach in others. When designing longitudinal studies, evaluating
 potential biases and best sampling strategy is as critical as the choice
 of test.
-
-## Installation
-
-You can get the most current version from **GitHub** with **devtools**
-package:
-
-``` r
-devtools::install_github('dhaine/misclass')
-```
